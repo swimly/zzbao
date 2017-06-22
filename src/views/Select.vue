@@ -125,7 +125,6 @@
             delete el.extra
             delete el.select
             delete el.type
-            delete el.id
             this.insurance.push(el)
           }
         })
@@ -134,7 +133,6 @@
             delete el.extra
             delete el.select
             delete el.type
-            delete el.id
             this.insurance.push(el)
           }
         })
@@ -143,7 +141,6 @@
             delete el.extra
             delete el.select
             delete el.type
-            delete el.id
             this.insurance.push(el)
           }
         })
