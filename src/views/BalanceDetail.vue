@@ -1,0 +1,109 @@
+<template>
+  <div class="page gray">
+    <div class="banner">
+      <div class="row w h">
+        <div class="col v-m t-c">
+          <h2>6874</h2>
+          <p>现有积分（分）</p>
+        </div>
+      </div>
+    </div>
+    <h2 class="title"><span class="iconfont icon-jilu"></span>收支记录</h2>
+    <v-scroll style="top:21vh;bottom:0;" :on-refresh="onRefresh" :on-infinite="onInfinite">
+      <group gutter="0px" v-for="(item, index) in list" :key="index">
+        <cell>
+          <ul class="row w">
+            <li class="col v-m col-4 t-l " :class="item.type === 1 ? 'green' : ''" style="font-size:1.6rem;">{{item.type === 1 ? '+' : '-'}}{{item.score}}</li>
+            <li class="col v-m col-20">
+              <p class="time">{{item.createTime}}</p>
+              <p class="text">{{item.source.split(':')[0]}}</p>
+            </li>
+          </ul>
+        </cell>
+      </group>
+    </v-scroll>
+  </div>
+</template>
+<script>
+  import {Group, Cell, dateFormat} from 'vux'
+  import {detail} from '../config'
+  import VScroll from '../components/VScroll'
+  export default {
+    head: {
+      title: {
+        inner: '积分余额'
+      }
+    },
+    components: {
+      Group,
+      VScroll,
+      Cell
+    },
+    data () {
+      return {
+        balance: 0,
+        list: [],
+        form: {
+          userId: '',
+          type: 2,
+          limit: 10,
+          pageIndex: 0
+        }
+      }
+    },
+    mounted () {
+      this.balance = this.$localStorage.get('balance')
+      this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+      this.getList(() => {}, null)
+    },
+    methods: {
+      onRefresh (done) {
+        this.form.pageIndex = 0
+        this.getList(done, 1)
+      },
+      onInfinite (done) {
+        this.form.pageIndex ++
+        this.getList(done, 0)
+      },
+      getList (done, status) {
+        const This = this
+        this.$http({
+          method: 'jsonp',
+          url: detail,
+          jsonp: 'callback',
+          jsonpCallback: 'json',
+          params: this.form,
+          before: () => {
+            if (status) {
+              this.list = []
+            }
+          }
+        })
+        .then(res => {
+          console.log(res)
+          res.body.data.scoreList.forEach(el => {
+            This.list.push(el)
+          })
+          if (res.body.data.scoreList.length < This.form.limit) {
+            this.$el.querySelector('.load-more').innerHTML = '我是有底线的！'
+          }
+          done()
+          for (const i in this.list) {
+            this.list[i].createTime = dateFormat(this.list[i].createTime)
+          }
+        })
+      }
+    }
+  }
+</script>
+<style scoped>
+.green{color:#49BC2E;}
+.time{font-size:1rem;color:#9D9D9D;}
+.text{font-size:1.1rem;line-height:1.8;color:#565656;}
+.fix-banner{padding-top:15vh;}
+.banner{height:15vh;background:#EB3D00;color:#fff;}
+.banner p{font-size:1rem;color:rgba(255,255,255,0.8);}
+.title:before{display:none;}
+.title{padding:0.3rem 1rem;border-bottom:1px solid #ECECEC;margin-top:0;}
+.title .iconfont{font-size:1.4rem;margin-right:0.5rem;vertical-align:middle;}
+</style>
