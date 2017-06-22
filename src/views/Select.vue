@@ -1,50 +1,53 @@
 <template>
   <div class="page gray has-btn">
     <div class="h auto content">
-      <group title="强制保险" class="select">
-        <Cell v-for="(item, index) in forcedConfig" :key="index">
+      {{forceValue}}
+      <group title="强制保险" class="select" v-if="force">
+        <Cell class="long">
           <div class="checkbox full" slot="icon">
-            <input type="radio" v-model="force.select" name="force" :id="'force' + index" value="1">
+            <input type="checkbox" checked name="force" id="force" :value="forceValue">
             <span class="iconfont icon-right1"></span>
-            <label :for="'force' + index">{{item.text}}</label>
+            <label for="force">{{forceName}}</label>
           </div>
         </Cell>
       </group>
-      <group title="基本险" class="select">
-        <Cell v-for="(item, index) in basicConfig" :key="index">
+      {{basic[1]}}
+      <group title="基本险" class="select" v-if="basic">
+        <Cell v-for="(item, index) in basic" :key="index">
           <div class="checkbox circle left" slot="icon">
-            <input type="checkbox" v-model="basic[item.name].select" name="basic" :id="'basic' + index">
+            <input type="checkbox" name="basic" v-model="item.value" :id="'b' + index">
             <span class="iconfont icon-dot"></span>
-            <label :for="'basic' + index">{{item.text}}</label>
+            <label :for="'b' + index">{{item.name}}</label>
           </div>
-          <div class="form select" slot="title" v-if="item.value">
-            <select v-model="basic[item.name].value">
-              <option v-for="(item, index) in item.value" v-bind:value="index">{{item}}</option>
+          <div class="form select" slot="title" v-if="item.extra">
+            <select v-model="item.sum">
+              <option v-for="(item, index) in item.extra.split(',')" v-bind:value="item.split(':')[0]">{{item.split(':')[1]}}</option>
             </select>
           </div>
-          <div class="checkbox circle right" slot="value" v-if="item.regardless" v-show="basic[item.name].select">
-            <input type="checkbox" checked v-model="basic[item.name].regardless" name="basicReg" :id="'basicReg' + index">
+          <div class="checkbox circle right" slot="value" v-if="item.value">
+            <input type="checkbox" checked name="basicReg" :id="'bg' + index" v-model="item.regardless">
             <span class="iconfont icon-dot"></span>
-            <label :for="'basicReg' + index">不计免赔</label>
+            <label :for="'bg' + index">不计免赔</label>
           </div>
         </Cell>
       </group>
-      <group title="附加险" class="select">
-        <Cell v-for="(item, index) in additionalConfig" :key="index" :class="item.value ? '' : 'long'">
+      {{additional[0]}}
+      <group title="附加险" class="select" v-if="additional">
+        <Cell v-for="(item, index) in additional" :key="index">
           <div class="checkbox circle left" slot="icon">
-            <input type="checkbox" v-model="additional[item.name].select" name="additional" :id="'additional' + index">
+            <input type="checkbox" name="basic" v-model="item.value" :id="'a' + index">
             <span class="iconfont icon-dot"></span>
-            <label :for="'additional' + index">{{item.text}}</label>
+            <label :for="'a' + index">{{item.name}}</label>
           </div>
-          <div class="form select" slot="title" v-if="item.value">
-            <select v-model="additional[item.name].value">
-              <option v-for="(item, index) in item.value" v-bind:value="index">{{item}}</option>
+          <div class="form select" slot="title" v-if="item.extra">
+            <select v-model="item.sum">
+              <option v-for="(item, index) in item.extra.split(',')" v-bind:value="item.split(':')[0]">{{item.split(':')[1]}}</option>
             </select>
           </div>
-          <div class="checkbox circle right" slot="value" v-if="item.regardless" v-show="additional[item.name].select">
-            <input type="checkbox" checked v-model="additional[item.name].regardless" name="additionalReg" :id="'additionalReg' + index">
+          <div class="checkbox circle right" slot="value" v-if="item.value">
+            <input type="checkbox" checked name="basicReg" :id="'ag' + index" v-model="item.regardless">
             <span class="iconfont icon-dot"></span>
-            <label :for="'additionalReg' + index">不计免赔</label>
+            <label :for="'ag' + index">不计免赔</label>
           </div>
         </Cell>
       </group>
@@ -59,85 +62,25 @@
 <script>
   import {Group, Cell, XButton} from 'vux'
   import {mapGetters} from 'vuex'
-  import SelectItem from '@/components/SelectItem'
-  import {basic, additional, forced, submitOrder} from '../config'
+  import {insurance} from '../config'
+  // import {submitOrder, insurance} from '../config'
   export default {
     data () {
       return {
-        forcedConfig: forced,
-        basicConfig: basic,
-        additionalConfig: additional,
-        forcedInsurance: '', // 强制保险
-        lossInsurance: 0,
-        force: {
-          select: 1,
-          name: '交通强险+车船税'
-        },
-        basic: {
-          lossInsurance: {
-            select: 0, // 车辆损失险
-            name: '车辆损失保险',
-            regardless: true // 不计免赔
-          },
-          thirdParty: {
-            select: 0, // 第三者责任险
-            name: '第三者责任险',
-            value: '50万',
-            regardless: true // 不计免赔
-          },
-          driverSeat: {
-            select: 0, // 司机座位险
-            name: '司机座位险',
-            value: '6万/座',
-            regardless: true // 不计免赔
-          },
-          passengerSeat: {
-            select: 0, // 乘客座位险
-            name: '乘客座位险',
-            value: '1万/座',
-            regardless: true // 不计免赔
-          },
-          robbery: {
-            select: 0, // 盗抢险
-            name: '盗抢险'
-          }
-        },
-        additional: {
-          glassCrushing: {
-            select: 0, // 玻璃破碎险
-            name: '玻璃破碎险',
-            value: '国产',
-            regardless: true
-          },
-          autoignition: {
-            select: 0, // 自燃损失险
-            name: '自燃损失险',
-            regardless: true
-          },
-          wading: {
-            select: 0, // 涉水险
-            name: '涉水险',
-            value: '1万/座',
-            regardless: true
-          },
-          escape: {
-            select: 0, // 三者逃逸险
-            name: '无法找到第三方特约险',
-            regardless: true
-          },
-          appointedSpecialist: {
-            select: 0, // 指定专修厂特约险
-            name: '指定专修厂特约险',
-            regardless: true
-          }
-        }
+        force: [],
+        basic: [],
+        additional: [],
+        forceName: '',
+        forceValue: []
       }
     },
     components: {
       Group,
       Cell,
-      XButton,
-      SelectItem
+      XButton
+    },
+    mounted () {
+      this.handleInsurance()
     },
     created () {
       console.log(this.$route.params.id)
@@ -148,61 +91,38 @@
       })
     },
     methods: {
-      handleSubmit () {
-        let insurance = []
-        let order = {}
-        if (this.force.select) {
-          insurance.push({
-            name: this.force.name
-          })
-        }
-        for (const i in this.basic) {
-          if (this.basic[i].select) {
-            insurance.push({
-              name: this.basic[i].name,
-              regardless: this.basic[i].regardless,
-              value: this.basic[i].value || null
-            })
-          }
-        }
-        for (const i in this.additional) {
-          if (this.additional[i].select) {
-            insurance.push({
-              name: this.additional[i].name,
-              regardless: this.additional[i].regardless,
-              value: this.additional[i].value || null
-            })
-          }
-        }
-        // this.$localStorage.set('orderInsurance', JSON.stringify(insurance))
-        order = {
-          company: JSON.parse(this.$localStorage.get('orderCompany')),
-          user: JSON.parse(this.$localStorage.get('orderUser')),
-          card: JSON.parse(this.$localStorage.get('orderPic')),
-          insurance: JSON.parse(this.$localStorage.get('orderInsurance'))
-        }
-        // this.$localStorage.remove('orderCompany')
-        // this.$localStorage.remove('orderInsurance')
-        // this.$localStorage.remove('orderPic')
-        // this.$localStorage.remove('orderUser')
-        this.$localStorage.set('order', JSON.stringify(order))
+      handleInsurance () {
         this.$http({
           method: 'jsonp',
-          url: submitOrder,
+          url: insurance,
           jsonp: 'callback',
-          jsonpCallback: 'json',
-          params: {
-            userId: JSON.parse(this.$localStorage.get('userInfo')).userId,
-            orderInfo: order
-          },
-          before: () => {
-            this.loading = true
-          }
+          jsonpCallback: 'json'
         })
         .then(res => {
-          console.log(res)
+          const result = res.body.data.insuranceList
+          result.forEach(item => {
+            item.value = false
+            item.sum = item.extra.split(',')[0].split(':')[0]
+            switch (item.type) {
+              case 0:
+                this.force.push(item)
+                break
+              case 1:
+                this.basic.push(item)
+                break
+              case 2:
+                this.additional.push(item)
+                break
+            }
+          })
+          this.force.forEach(item => {
+            this.forceValue.push(item.id)
+            this.forceName += '+' + item.name
+          })
         })
-        this.$router.push('/offer/success/' + this.$route.params.id)
+      },
+      handleSubmit () {
+        console.log(this.force, this.basic, this.additional)
       }
     }
   }
