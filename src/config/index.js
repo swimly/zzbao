@@ -14,6 +14,7 @@ export const wallet = 'http://liuwbox.com/zzbao/app/user/wallet.htm' // 我的�
 export const donation = 'http://liuwbox.com/zzbao/app/user/donation.htm' // 积分转赠
 export const precard = 'http://liuwbox.com/zzbao/app/user/precard.htm' // 上次用的卡
 export const message = 'http://liuwbox.com/zzbao/app/user/message.htm' // 我的消息
+export const messageStatus = 'http://liuwbox.com/zzbao/app/user/message/status.htm' // 更新消息状态
 export const question = 'http://liuwbox.com/zzbao/app/user/questiones.htm' // 常见问题
 export const exchangeLog = 'http://liuwbox.com/zzbao/app/shop/exchange/log.htm' // 兑换记录
 export const withdraw = 'http://liuwbox.com/zzbao/app/user/withdraw.htm' // 积分提现

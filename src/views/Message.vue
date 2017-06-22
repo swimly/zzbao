@@ -11,7 +11,7 @@
 </template>
 <script>
   import {Group, Cell, Badge, dateFormat} from 'vux'
-  import {message} from '../config'
+  import {message, messageStatus} from '../config'
   export default {
     components: {
       Group,
@@ -24,35 +24,43 @@
       }
     },
     created () {
-      this.$http({
-        method: 'jsonp',
-        url: message,
-        jsonp: 'callback',
-        jsonpCallback: 'json',
-        params: {
-          // userId: JSON.parse(this.$localStorage.get('userInfo')).userId,
-          userId: '0e9236d6b4474f259cfd1d2f9bf8f3b0',
-          limit: 10,
-          pageIndex: 0
-        }
-      })
-      .then(res => {
-        console.log(res)
-        res.body.data.messageList.forEach(el => {
-          el.createTime = dateFormat(el.createTime)
+      this.getList()
+    },
+    methods: {
+      handleChange () {
+        console.log(messageStatus)
+      },
+      getList () {
+        this.$http({
+          method: 'jsonp',
+          url: message,
+          jsonp: 'callback',
+          jsonpCallback: 'json',
+          params: {
+            // userId: JSON.parse(this.$localStorage.get('userInfo')).userId,
+            userId: '0e9236d6b4474f259cfd1d2f9bf8f3b0',
+            limit: 10,
+            pageIndex: 0
+          }
         })
-        if (res.body.status) {
-          this.list = res.body.data.messageList
-        } else {
-          this.$vux.toast.show({
-            type: 'text',
-            width: '10em',
-            position: 'bottom',
-            text: res.body.msg,
-            time: '1000'
+        .then(res => {
+          console.log(res)
+          res.body.data.messageList.forEach(el => {
+            el.createTime = dateFormat(el.createTime)
           })
-        }
-      })
+          if (res.body.status) {
+            this.list = res.body.data.messageList
+          } else {
+            this.$vux.toast.show({
+              type: 'text',
+              width: '10em',
+              position: 'bottom',
+              text: res.body.msg,
+              time: '1000'
+            })
+          }
+        })
+      }
     }
   }
 </script>
