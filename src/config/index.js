@@ -21,6 +21,8 @@ export const withdrawlog = 'http://liuwbox.com/zzbao/app/user/withdraw/log.htm' 
 export const detail = 'http://liuwbox.com/zzbao/app/user/bills.htm' // 收入明细
 export const feedback = 'http://liuwbox.com/zzbao/app/user/feedback.htm' // 用户反馈
 export const insurance = 'http://liuwbox.com/zzbao/app/insurance/list.htm' // 险种列表
+export const orderList = 'http://liuwbox.com/zzbao/app/order/list.htm' // 订单列表
+export const orderDetail = 'http://liuwbox.com/zzbao/app/order/detail.htm' // 订单详情
 // export const tokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential'
 // export const ticketUrl = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket'
 // export const appId = 'wxabf1c20c98f9cf4c'

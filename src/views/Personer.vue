@@ -31,24 +31,24 @@
       </div>
       <div class="mt-5 white sub-line top-line mb-5">
         <div class="row w order">
-          <router-link to="/order/price" class="col v-m">
+          <router-link to="/order/0" class="col v-m">
             <span class="iconfont"><x-img :src="'static/img/order1.png'"></x-img></span>
             <b>待报价</b>
           </router-link>
-          <router-link to="/order/pay" class="col v-m">
+          <router-link to="/order/3" class="col v-m">
             <span class="iconfont"><x-img :src="'static/img/order2.png'"></x-img></span>
             <b>待付款</b>
             <i class="num">2</i>
           </router-link>
-          <router-link to="/order/issue" class="col v-m">
+          <router-link to="/order/2" class="col v-m">
             <span class="iconfont"><x-img :src="'static/img/order3.png'"></x-img></span>
             <b>待出单</b>
           </router-link>
-          <router-link to="/order/issued" class="col v-m">
+          <router-link to="/order/4" class="col v-m">
             <span class="iconfont"><x-img :src="'static/img/order4.png'"></x-img></span>
             <b>已出单</b>
           </router-link>
-          <router-link to="/order/all" class="col v-m">
+          <router-link to="/order/-1" class="col v-m">
             <span class="iconfont"><x-img :src="'static/img/order5.png'"></x-img></span>
             <b>我的订单</b>
           </router-link>

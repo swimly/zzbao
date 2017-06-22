@@ -47,6 +47,7 @@
 </template>
 <script>
   import {Group, Cell, XButton, Flexbox, FlexboxItem, Divider} from 'vux'
+  import {orderDetail} from '../config'
   export default {
     components: {
       Group,
@@ -58,15 +59,34 @@
     },
     data () {
       return {
-        id: 0
+        id: 0,
+        order: {},
+        form: {
+          userId: '',
+          orderId: ''
+        }
       }
     },
     created () {
-      this.id = this.$route.params.id
+      this.form.orderId = this.$route.params.id
+      this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+      this.getDetail()
     },
     methods: {
       jump (url) {
         this.$router.push(url)
+      },
+      getDetail () {
+        this.$http({
+          method: 'jsonp',
+          url: orderDetail,
+          jsonp: 'callback',
+          jsonpCallback: 'json',
+          params: this.form
+        })
+        .then(res => {
+          this.order = res.body.data.order
+        })
       }
     }
   }

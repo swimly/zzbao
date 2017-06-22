@@ -21,7 +21,7 @@
       </ul>
       <ul class="row w price">
         <li class="col v-m t-r">
-          <router-link to="#" class="btn btn-light btn-small">联系客服</router-link>
+          <a :href="'http://wpa.qq.com/msgrd?v=3&uin=979741120&site=qq&menu=yes'" class="btn btn-light btn-small">联系客服</a>
           <router-link :to="'/pay/' + item.id" class="btn btn-danger btn-small" v-if="item.status === '待付款'">立刻付款</router-link>
         </li>
       </ul>
