@@ -8,15 +8,15 @@
     <section class="inner" :style="{ transform: 'translate3d(0, ' + top + 'px, 0)' }">
       <header class="pull-refresh">
         <slot name="pull-refresh">
-           <span class="down-tip">下拉更新</span>
-           <span class="up-tip">松开更新</span>
-           <span class="refresh-tip">更新中</span>
+           <span class="down-tip"><span class="iconfont icon-xiala" style="padding-right:0.5rem;"></span>下拉更新</span>
+           <span class="up-tip"><span class="iconfont icon-shangla" style="padding-right:0.5rem;"></span>松开更新</span>
+           <span class="refresh-tip"><img style="width:1.6rem;margin-right:0.5rem;" src="static/img/331.svg" alt="">更新中</span>
         </slot>
       </header>
       <slot></slot>
       <footer class="load-more">
         <slot name="load-more">
-          <span>加载中……</span>
+          <span><img style="width:1.6rem;margin-right:0.5rem;" src="static/img/331.svg" alt="">加载中……</span>
         </slot>
       </footer>
     </section>
@@ -28,7 +28,7 @@ export default {
   props: {
     offset: {
       type: Number,
-      default: 40
+      default: 60
     },
     enableInfinite: {
       type: Boolean,
