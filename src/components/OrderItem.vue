@@ -2,27 +2,27 @@
   <div>
     <div class="order-item mt-5" v-for="(item, index) in list" :key="index">
       <ul class="row w white status">
-        <li class="col v-m time col-14">{{item.time}}</li>
-        <li class="col v-m t-r col-10">{{item.status}}</li>
+        <li class="col v-m time col-14">{{item.createTime}}</li>
+        <li class="col v-m t-r col-10">{{changeStatus(item.orderStatus)}}</li>
       </ul>
       <router-link :to="'/order/detail/' + item.id" class="row w good">
         <span class="col v-m col-6">
           <span class="img">
-            <img src="static/img/safe1.png" alt="">
+            <img style="width:100%;height:100%;" v-lazy="{src: item.companyLogo}" alt="">
           </span>
         </span>
         <span class="col v-m col-18">
-          <h2 class="card">车牌号：鄂A78458</h2>
-          <p>被保人：张心仪</p>
+          <h2 class="card">车牌号：{{item.carNum}}</h2>
+          <p>被保人：{{item.policyholder}}</p>
         </span>
       </router-link>
       <ul class="row w price">
-        <li class="col v-m t-r">合计保费：<span class="num">{{item.price}}</span></li>
+        <li class="col v-m t-r">合计保费：<span class="num">{{changePrice(item)}}</span></li>
       </ul>
       <ul class="row w price">
         <li class="col v-m t-r">
           <a :href="'http://wpa.qq.com/msgrd?v=3&uin=979741120&site=qq&menu=yes'" class="btn btn-light btn-small">联系客服</a>
-          <router-link :to="'/pay/' + item.id" class="btn btn-danger btn-small" v-if="item.status === '待付款'">立刻付款</router-link>
+          <router-link :to="'/pay/' + item.id" class="btn btn-danger btn-small" v-if="item.orderStatus === 3">立刻付款</router-link>
         </li>
       </ul>
     </div>
@@ -34,6 +34,40 @@
       list: {
         type: Array,
         default: []
+      }
+    },
+    methods: {
+      changeStatus (num) {
+        switch (num) {
+          case 0:
+            return '待报价'
+          case 1:
+            return '已撤销'
+          case 2:
+            return '待承保'
+          case 3:
+            return '待付款'
+          case 4:
+            return '已承保'
+          case 5:
+            return '核保失败'
+        }
+      },
+      changePrice (item) {
+        switch (item.orderStatus) {
+          case 0:
+            return '待报价'
+          case 1:
+            return '0.00'
+          case 2:
+            return '￥' + item.maxFee
+          case 3:
+            return '￥' + item.maxFee
+          case 4:
+            return '￥' + item.maxFee
+          case 5:
+            return '暂无保费'
+        }
       }
     }
   }

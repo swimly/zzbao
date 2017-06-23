@@ -6,16 +6,15 @@
     <swiper v-model="index" :show-dots="false" class="h" :height="height" @on-index-change="handleSwiper" :min-moving-distance="100">
       <swiper-item v-for="(item, index) in bar" :key="index" class="h">
         <div class="tab-swiper vux-center h auto">
-          <order-item :list="lists"></order-item>
+          <order-item :list="list"></order-item>
         </div>
       </swiper-item>
     </swiper>
   </div>
 </template>
 <script>
-  import {Tab, TabItem, Swiper, SwiperItem, Sticky} from 'vux'
+  import {Tab, TabItem, Swiper, SwiperItem, Sticky, dateFormat} from 'vux'
   import OrderItem from '@/components/OrderItem'
-  import {mapGetters} from 'vuex'
   import {orderList} from '../config'
   export default {
     head: {
@@ -27,7 +26,7 @@
       return {
         loading: false,
         form: {
-          userId: '',
+          userId: '09313c0941454f118950266606f3b6be',
           status: -1,
           limit: 10,
           pageIndex: 0
@@ -63,16 +62,11 @@
           this.index = parseInt(i)
         }
       }
-      this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+      // this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
       this.form.status = this.$route.params.id
       if (this.form.status === '-1') {
         this.getList()
       }
-    },
-    computed: {
-      ...mapGetters({
-        lists: 'getOrderList'
-      })
     },
     components: {
       Tab,
@@ -93,6 +87,10 @@
         })
         .then(res => {
           this.list = res.body.data.orderList
+          this.list.forEach(el => {
+            el.createTime = dateFormat(el.createTime)
+          })
+          console.log(this.list)
         })
       },
       handleChange (item, index) {
