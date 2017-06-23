@@ -1,14 +1,20 @@
 <template>
   <div class="page gray auto">
-    <group gutter="0">
-      <cell :title="'鄂A478445-张心仪'" :value="'太平洋车险'" value-align="right"></cell>
+    <group gutter="0" v-if="order.user">
+      <cell :value="order.company.companyName" value-align="right">
+        <p slot="title">{{order.user.ownerName}}-{{order.user.ownerLicense}}</p>
+      </cell>
       <cell>
         <div slot="title">
-          <h2 class="tip"><span class="iconfont icon-correct"></span>已出单</h2>
-          <p style="padding:0.5rem 0;font-size:1.2rem;color:#8B8B8B;margin-bottom:0.5rem;">车险投保成功</p>
+          <h2 class="tip"><span :class="'iconfont ' + changeStatus(orderDetail.orderStatus).icon"></span>{{changeStatus(orderDetail.orderStatus).status}}</h2>
+          <p style="padding:0.5rem 0;font-size:1.2rem;color:#8B8B8B;margin-bottom:0.5rem;" v-html="changeStatus(orderDetail.orderStatus).text"></p>
           <flexbox slot="inline-desc">
             <flexbox-item>
-              <x-button type="warn" @click.native="jump('/pay/info/' + id)">支付详情</x-button>
+              <x-button v-if="orderDetail.orderStatus === 0" type="warn" @click.native="jump('/pay/info/' + id)">撤销报价</x-button>
+              <x-button v-if="orderDetail.orderStatus === 2" type="warn" @click.native="jump('/pay/info/' + id)">支付详情</x-button>
+              <x-button v-if="orderDetail.orderStatus === 3" type="warn" @click.native="jump('/pay/info/' + id)">立即付款</x-button>
+              <x-button v-if="orderDetail.orderStatus === 5 || orderDetail.orderStatus === 1" type="warn" @click.native="jump('/pay/info/' + id)">重新下单</x-button>
+              <x-button v-if="orderDetail.orderStatus === 4" type="warn" @click.native="jump('/pay/info/' + id)">支付详情</x-button>
             </flexbox-item>
             <flexbox-item>
             </flexbox-item>
@@ -30,18 +36,18 @@
       <cell title="保单信息" value="查看详情" is-link :link="'/policy/' + id"></cell>
       <cell title="商业险"></cell>
       <cell>
-        <p slot="title">商业险<span>（含车船税）</span></p>
+        <p slot="title">交强险<span>（含车船税）</span></p>
       </cell>
     </group>
     <group gutter="5px">
       <cell title="车辆信息"></cell>
-      <cell title="车牌号" value="鄂A54125"></cell>
-      <cell title="车主姓名" value="刘勇"></cell>
+      <cell title="车牌号" :value="order.user.ownerLicense"></cell>
+      <cell title="车主姓名" :value="order.user.ownerName"></cell>
     </group>
     <group gutter="5px">
       <cell title="订单信息"></cell>
-      <cell title="订单号" value="25412547854"></cell>
-      <cell title="下单时间" value="2017-05-25 17：54"></cell>
+      <cell title="订单号" :value="orderDetail.id"></cell>
+      <cell title="下单时间" :value="orderDetail.createTime"></cell>
     </group>
   </div>
 </template>
@@ -61,6 +67,7 @@
       return {
         id: 0,
         order: {},
+        orderDetail: JSON.parse(this.$localStorage.get('orderDetail')),
         form: {
           userId: '',
           orderId: ''
@@ -73,6 +80,46 @@
       this.getDetail()
     },
     methods: {
+      changeStatus (num) {
+        switch (num) {
+          case 0:
+            return {
+              icon: 'icon-tishi',
+              status: '待报价',
+              text: '报价结果将在<span style="color:#EB3D00;padding:0 5px;">1</span>个工作日之内反馈'
+            }
+          case 1:
+            return {
+              icon: 'icon-faild',
+              status: '已撤销',
+              text: '您已主动撤销订单，给您带来不便敬请谅解'
+            }
+          case 2:
+            return {
+              icon: 'icon-time',
+              status: '待承保',
+              text: '付款成功，请耐心等待保险出单'
+            }
+          case 3:
+            return {
+              icon: 'icon-pay',
+              status: '待付款',
+              text: '订单报价成功，请尽快付款'
+            }
+          case 4:
+            return {
+              icon: 'icon-success',
+              status: '已承保',
+              text: '车险投保成功！'
+            }
+          case 5:
+            return {
+              icon: 'icon-faild',
+              status: '核保失败',
+              text: '您的保单信息未通过审核，请核对信息后重试'
+            }
+        }
+      },
       jump (url) {
         this.$router.push(url)
       },
@@ -86,6 +133,8 @@
         })
         .then(res => {
           this.order = res.body.data.order
+          this.$localStorage.set('order', JSON.stringify(this.order))
+          console.log(this.order)
         })
       }
     }

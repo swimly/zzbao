@@ -5,9 +5,11 @@
     </tab>
     <swiper v-model="index" :show-dots="false" class="h" :height="height" @on-index-change="handleSwiper" :min-moving-distance="100">
       <swiper-item v-for="(item, index) in bar" :key="index" class="h">
-        <div class="tab-swiper vux-center h auto">
-          <order-item :list="list"></order-item>
-        </div>
+        <v-scroll :on-refresh="onRefresh" :on-infinite="onInfinite">
+          <div class="tab-swiper vux-center h auto">
+            <order-item :list="list"></order-item>
+          </div>
+        </v-scroll>
       </swiper-item>
     </swiper>
   </div>
@@ -16,6 +18,7 @@
   import {Tab, TabItem, Swiper, SwiperItem, Sticky, dateFormat} from 'vux'
   import OrderItem from '@/components/OrderItem'
   import {orderList} from '../config'
+  import VScroll from '../components/VScroll'
   export default {
     head: {
       title: {
@@ -28,7 +31,7 @@
         form: {
           userId: '09313c0941454f118950266606f3b6be',
           status: -1,
-          limit: 10,
+          limit: 5,
           pageIndex: 0
         },
         height: '0px',
@@ -65,7 +68,7 @@
       // this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
       this.form.status = this.$route.params.id
       if (this.form.status === '-1') {
-        this.getList()
+        this.getList(() => {}, 1)
       }
     },
     components: {
@@ -74,19 +77,43 @@
       Swiper,
       SwiperItem,
       Sticky,
-      OrderItem
+      OrderItem,
+      VScroll
     },
     methods: {
-      getList () {
+      onRefresh (done) {
+        this.form.pageIndex = 0
+        this.getList(done, 1)
+      },
+      onInfinite (done) {
+        this.form.pageIndex ++
+        this.getList(done, 0)
+      },
+      getList (done, status) {
+        const This = this
         this.$http({
           method: 'jsonp',
           url: orderList,
           jsonp: 'callback',
           jsonpCallback: 'json',
-          params: this.form
+          params: this.form,
+          before: () => {
+            if (status) {
+              this.list = []
+            }
+          }
         })
         .then(res => {
-          this.list = res.body.data.orderList
+          res.body.data.orderList.forEach(el => {
+            This.list.push(el)
+          })
+          if (res.body.data.orderList.length < This.form.limit) {
+            this.$el.querySelector('.load-more').innerHTML = '我是有底线的！'
+          }
+          done()
+          for (const i in this.list) {
+            this.list[i].createTime = dateFormat(this.list[i].createTime)
+          }
           this.list.forEach(el => {
             el.createTime = dateFormat(el.createTime)
           })
@@ -101,7 +128,7 @@
       handleSwiper (index) {
         this.$router.replace(this.bar[index].key)
         this.form.status = this.bar[index].key
-        this.getList()
+        this.getList(() => {}, 1)
       }
     }
   }

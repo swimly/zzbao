@@ -5,7 +5,7 @@
         <li class="col v-m time col-14">{{item.createTime}}</li>
         <li class="col v-m t-r col-10">{{changeStatus(item.orderStatus)}}</li>
       </ul>
-      <router-link :to="'/order/detail/' + item.id" class="row w good">
+      <router-link :to="'/order/detail/' + item.id" class="row w good" @click.native="handleSaveData(item)">
         <span class="col v-m col-6">
           <span class="img">
             <img style="width:100%;height:100%;" v-lazy="{src: item.companyLogo}" alt="">
@@ -68,6 +68,9 @@
           case 5:
             return '暂无保费'
         }
+      },
+      handleSaveData (item) {
+        this.$localStorage.set('orderDetail', JSON.stringify(item))
       }
     }
   }
