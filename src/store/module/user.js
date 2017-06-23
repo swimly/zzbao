@@ -143,7 +143,7 @@ const mutations = {
             This.$localStorage.set('time', Date.parse(new Date()))
             This.$localStorage.set('logined', true)
             setTimeout(() => {
-              This.$router.replace('/')
+              This.$router.replace('/personer')
             }, 1000)
           } else {
             This.loading = false

@@ -16,45 +16,37 @@
         </li>
       </ul>
     </blur>
-    <div class="h auto view">
-      <div class="p-1 white sub-line">
-        <div class="row w default">
-          <router-link to="/detail" class="col v-m col-12 t-c">
-            <h2 class="num">{{cumulative}}</h2>
-            <p class="text">累计积分收入（分）</p>
-          </router-link>
-          <router-link to="/balanceDetail" class="col v-m col-12 t-c">
-            <h2 class="num">{{balance}}</h2>
-            <p class="text">积分余额（分）</p>
-          </router-link>
-        </div>
+    <div class="p-1 white sub-line fix-info">
+      <div class="row w default">
+        <router-link to="/detail" class="col v-m col-12 t-c">
+          <h2 class="num">{{cumulative}}分</h2>
+          <p class="text">累计积分收入</p>
+        </router-link>
+        <router-link to="/balanceDetail" class="col v-m col-12 t-c">
+          <h2 class="num">{{balance}}分</h2>
+          <p class="text">积分余额</p>
+        </router-link>
       </div>
-      <div class="mt-5 white sub-line top-line mb-5">
+    </div>
+    <div class="h auto view" style="padding-top:40px;">
+      <group class="mt-5 sub-line mb-5" title="订单管理">
         <div class="row w order">
-          <router-link to="/order/0" class="col v-m">
-            <span class="iconfont"><x-img :src="'static/img/order1.png'"></x-img></span>
-            <b>待报价</b>
-          </router-link>
-          <router-link to="/order/3" class="col v-m">
-            <span class="iconfont"><x-img :src="'static/img/order2.png'"></x-img></span>
+          <router-link to="/order/3" class="col v-m col-8">
+            <span class="iconfont icon-money red"></span>
             <b>待付款</b>
-            <i class="num">2</i>
+            <i v-if="false" class="num">2</i>
           </router-link>
-          <router-link to="/order/2" class="col v-m">
-            <span class="iconfont"><x-img :src="'static/img/order3.png'"></x-img></span>
-            <b>待出单</b>
+          <router-link to="/order/4" class="col v-m col-8">
+            <span class="iconfont icon-finish yellow"></span>
+            <b>已承保</b>
           </router-link>
-          <router-link to="/order/4" class="col v-m">
-            <span class="iconfont"><x-img :src="'static/img/order4.png'"></x-img></span>
-            <b>已出单</b>
-          </router-link>
-          <router-link to="/order/-1" class="col v-m">
-            <span class="iconfont"><x-img :src="'static/img/order5.png'"></x-img></span>
+          <router-link to="/order/-1" class="col v-m col-8">
+            <span class="iconfont icon-order blue"></span>
             <b>我的订单</b>
           </router-link>
         </div>
-      </div>
-      <group gutter="0px">
+      </group>
+      <group title="其他管理">
         <cell is-link link="/wallet">
           <span class="iconfont icon-wallet c-yellow" slot="icon"></span>
           <span slot="title">我的钱包</span>
@@ -162,6 +154,11 @@
 .fix-blur{padding-top:200px;}
 .fix-blur .head-bar{margin-top:-200px;}
 .head-bar a{font-size:1.2rem;color:#fff;padding:0;}
-.default .num{color:#444;font-size:1.6rem;}
-.default .text{color:#999;text-indent:1rem;}
+.default .num{color:#eb3d00;font-size:1.6rem;}
+.default .text{color:#3a3a3a;font-size:1.1rem;}
+.default a:first-child:after{content:"";display:inline-block;width:1px;height:40px;background:#E0E0E0;position:absolute;right:0;top:50%;transform:translateY(-50%)}
+.red{background:#FF4C42;}
+.yellow{background:#FFA500;}
+.blue{background:#52C5FE;}
+.fix-info{position:fixed;top:160px;left:50%;width:90%;transform:translateX(-50%);border-radius:1.5rem;z-index:100;box-shadow:0 5px 20px #ccc;}
 </style>
