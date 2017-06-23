@@ -7,23 +7,19 @@
       </tab-item>
     </tab>
     <div class="h content">
-      <swiper v-model="index" height="100px" :show-dots="false" :height="height" @on-index-change="handleSwiper">
-        <swiper-item v-for="(item, index) in bar" :key="index">
-          <div class="tab-swiper vux-center h auto">
-            <ul class="grid goods-list">
-              <li class="col col-12" v-for="(item, index) in list" :key="index">
-                <router-link :to="'/goods/' + item.id" class="goods" @click.native="handleSaveData(item)">
-                  <span class="cover">
-                    <img class="w h" v-lazy="{src: item.cover, error: 'static/img/err1.png', loading: 'static/img/loading1.gif'}"/>
-                  </span>
-                  <b class="name">{{item.name}}</b>
-                  <span class="c-red">积分<b class="score">{{item.score}}</b></span>
-                </router-link>
-              </li>
-            </ul>
-          </div>
-        </swiper-item>
-      </swiper>
+      <div class="tab-swiper vux-center h auto">
+        <ul class="grid goods-list">
+          <li class="col col-12" v-for="(item, index) in list" :key="index">
+            <router-link :to="'/goods/' + item.id" class="goods" @click.native="handleSaveData(item)">
+              <span class="cover">
+                <img class="w h" v-lazy="{src: item.cover, error: 'static/img/err1.png', loading: 'static/img/loading1.gif'}"/>
+              </span>
+              <b class="name">{{item.name}}</b>
+              <span class="c-red">积分<b class="score">{{item.score}}</b></span>
+            </router-link>
+          </li>
+        </ul>
+      </div>
       <Loading :show="showLoading">
         <p slot="text">正在拉取商品列表！</p>
       </Loading>
@@ -168,39 +164,39 @@
           }
         }
       },
-      handleSwiper (index) {
-        switch (index) {
-          case 0:
-            this.product.timeOrder = 0
-            this.product.priceOrder = 0
-            this.product.defaultOrder = 0
-            break
-          case 1:
-            this.product.timeOrder = 0
-            this.product.priceOrder = 0
-            this.product.defaultOrder = 1
-            break
-          case 2:
-            this.product.priceOrder = 0
-            this.product.defaultOrder = 0
-            if (this.bar[index]) {
-              this.product.timeOrder = 2
-            } else {
-              this.product.timeOrder = 1
-            }
-            break
-          case 3:
-            this.product.timeOrder = 0
-            this.product.defaultOrder = 0
-            if (this.bar[index]) {
-              this.product.priceOrder = 2
-            } else {
-              this.product.priceOrder = 1
-            }
-            break
-        }
-        this.getProduct(this, null)
-      },
+      // handleSwiper (index) {
+      //   switch (index) {
+      //     case 0:
+      //       this.product.timeOrder = 0
+      //       this.product.priceOrder = 0
+      //       this.product.defaultOrder = 0
+      //       break
+      //     case 1:
+      //       this.product.timeOrder = 0
+      //       this.product.priceOrder = 0
+      //       this.product.defaultOrder = 1
+      //       break
+      //     case 2:
+      //       this.product.priceOrder = 0
+      //       this.product.defaultOrder = 0
+      //       if (this.bar[index]) {
+      //         this.product.timeOrder = 2
+      //       } else {
+      //         this.product.timeOrder = 1
+      //       }
+      //       break
+      //     case 3:
+      //       this.product.timeOrder = 0
+      //       this.product.defaultOrder = 0
+      //       if (this.bar[index]) {
+      //         this.product.priceOrder = 2
+      //       } else {
+      //         this.product.priceOrder = 1
+      //       }
+      //       break
+      //   }
+      //   this.getProduct(this, null)
+      // },
       handleSelect (item) {
         this.option = item.name
         this.product.type = item.id
