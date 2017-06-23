@@ -42,13 +42,22 @@
       for (const key in this.info.insurance) {
         switch (parseInt(this.info.insurance[key].type)) {
           case 0:
-            this.force.push(this.info.insurance[key])
+            this.force.push({
+              label: this.info.insurance[key].name,
+              value: this.info.insurance[key].value
+            })
             break
           case 1:
-            this.insurance.push(this.info.insurance[key])
+            this.insurance.push({
+              label: this.info.insurance[key].name,
+              value: this.info.insurance[key].value
+            })
             break
           case 2:
-            this.insurance.push(this.info.insurance[key])
+            this.insurance.push({
+              label: this.info.insurance[key].name,
+              value: this.info.insurance[key].value
+            })
             break
         }
       }

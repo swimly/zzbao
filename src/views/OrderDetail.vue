@@ -32,19 +32,19 @@
         </ul>
       </cell>
     </group>
-    <group gutter="5px">
+    <group gutter="5px" v-if="order.user">
       <cell title="保单信息" value="查看详情" is-link :link="'/policy/' + id"></cell>
       <cell title="商业险"></cell>
       <cell>
         <p slot="title">交强险<span>（含车船税）</span></p>
       </cell>
     </group>
-    <group gutter="5px">
+    <group gutter="5px" v-if="order.user">
       <cell title="车辆信息"></cell>
       <cell title="车牌号" :value="order.user.ownerLicense"></cell>
       <cell title="车主姓名" :value="order.user.ownerName"></cell>
     </group>
-    <group gutter="5px">
+    <group gutter="5px" v-if="order.user">
       <cell title="订单信息"></cell>
       <cell title="订单号" :value="orderDetail.id"></cell>
       <cell title="下单时间" :value="orderDetail.createTime"></cell>
