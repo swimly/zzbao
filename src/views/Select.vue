@@ -145,14 +145,14 @@
           }
         })
         this.$localStorage.set('insurance', JSON.stringify(this.insurance))
-        this.form.orderInfo = JSON.stringify({
+        this.form.orderInfo = {
           company: JSON.parse(this.$localStorage.get('orderCompany')),
           user: JSON.parse(this.$localStorage.get('orderUser')),
           card: JSON.parse(this.$localStorage.get('orderPic')),
           insurance: this.insurance
-        })
+        }
         this.$localStorage.set('order', JSON.stringify(this.form))
-        console.log(this.form)
+        this.form.orderInfo = JSON.stringify(this.form.orderInfo)
         this.$http({
           method: 'jsonp',
           url: submitOrder,

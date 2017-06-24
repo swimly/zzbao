@@ -29,7 +29,7 @@
       return {
         loading: false,
         form: {
-          userId: JSON.parse(this.$localStorage.get('userInfo')).userId,
+          userId: '',
           status: -1,
           limit: 5,
           pageIndex: 0
@@ -58,6 +58,22 @@
     },
     mounted () {
       this.height = document.querySelector('.vux-slider').clientHeight + 'px'
+      if (this.$localStorage.get('logined') === 'true') {
+        this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+        this.form.status = this.$route.params.id
+        if (this.form.status === '-1') {
+          this.getList(() => {}, 1)
+        }
+      } else {
+        this.$vux.toast.show({
+          type: 'text',
+          width: '10em',
+          position: 'bottom',
+          text: '请先登录！',
+          time: '1000'
+        })
+        this.$router.replace('/personer')
+      }
     },
     created () {
       for (const i in this.bar) {
@@ -66,10 +82,6 @@
         }
       }
       // this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
-      this.form.status = this.$route.params.id
-      if (this.form.status === '-1') {
-        this.getList(() => {}, 1)
-      }
     },
     components: {
       Tab,

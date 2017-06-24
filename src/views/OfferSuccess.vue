@@ -1,7 +1,7 @@
 <template>
   <div class="page gray has-btn">
     <div class="h auto content">
-      <group gutter="0px">
+      <group gutter="0px" v-if="order">
         <cell :title="order.user.ownerName" :value="order.user.ownerLicense"></cell>
         <cell title="保险公司" :value="order.company.companyName"></cell>
         <cell title="订单号" :value="'46416313544'"></cell>
@@ -36,7 +36,15 @@
     },
     data () {
       return {
-        order: {}
+        order: {
+          user: {
+            ownerName: '',
+            ownerLicense: ''
+          },
+          company: {
+            companyName: ''
+          }
+        }
       }
     },
     methods: {

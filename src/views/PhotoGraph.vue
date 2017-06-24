@@ -39,7 +39,7 @@
           <img v-if="form.drivingLicense" v-lazy="form.drivingLicense" alt="">
           <img v-if="!form.drivingLicense" v-lazy="{src: 'static/img/jszf.png', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
           <span class="iconfont icon-add" @click="saveData(2)">
-            <input name="drivingLicense" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
+            <input name="drivingLicense" type="file" @change="handleFileChange1" capture="camera" accept='image/*'>
           </span>
         </div>
         <h4 class="sub-module-title sub-line">行驶证副本照</span></h4>
@@ -55,7 +55,7 @@
           <img v-if="form.subDrivingLicense" v-lazy="form.subDrivingLicense" alt="">
           <img v-if="!form.subDrivingLicense" v-lazy="{src: 'static/img/jsz.png', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
           <span class="iconfont icon-add" @click="saveData(3)">
-            <input name="subDrivingLicense" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
+            <input name="subDrivingLicense" type="file" @change="handleFileChange1" capture="camera" accept='image/*'>
           </span>
         </div>
       </div>

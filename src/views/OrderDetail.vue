@@ -46,7 +46,7 @@
     </group>
     <group gutter="5px" v-if="order.user">
       <cell title="订单信息"></cell>
-      <cell title="订单号" :value="orderDetail.id"></cell>
+      <cell title="订单号" :value="orderDetail.orderSn"></cell>
       <cell title="下单时间" :value="orderDetail.createTime"></cell>
     </group>
   </div>
