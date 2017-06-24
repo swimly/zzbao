@@ -17,7 +17,7 @@
         <div class="take-photo">
           <img v-if="form.idCard" v-lazy="form.idCard" alt="">
           <img v-if="!form.idCard" v-lazy="{src: 'static/img/sfz.png', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
-          <span class="iconfont icon-add" @click="handleTakePhoto">
+          <span class="iconfont icon-add">
             <input name="idcard" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
           </span>
         </div>
@@ -38,7 +38,7 @@
         <div class="take-photo">
           <img v-if="form.drivingLicense" v-lazy="form.drivingLicense" alt="">
           <img v-if="!form.drivingLicense" v-lazy="{src: 'static/img/jszf.png', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
-          <span class="iconfont icon-add" @click="handleTakePhoto">
+          <span class="iconfont icon-add">
             <input name="license" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
           </span>
         </div>
@@ -54,8 +54,8 @@
         <div class="take-photo">
           <img v-if="form.subDrivingLicense" v-lazy="form.subDrivingLicense" alt="">
           <img v-if="!form.subDrivingLicense" v-lazy="{src: 'static/img/jsz.png', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
-          <span class="iconfont icon-add" @click="handleTakePhoto">
-            <input name="sublicense" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
+          <span class="iconfont icon-add">
+            <input name="sublicense" type="file" @change="handleFileChange1" capture="camera" accept='image/*'>
           </span>
         </div>
       </div>
@@ -69,6 +69,7 @@
 </template>
 <script>
   import lrz from 'lrz/dist/lrz.all.bundle.js'
+  import {uploadFile} from '../config'
   import {XButton} from 'vux'
   export default {
     head: {
@@ -89,7 +90,20 @@
       XButton
     },
     methods: {
-      handleTakePhoto () {
+      handleFileChange1 (file) {
+        console.log(file.target.files[0])
+        this.$http({
+          method: 'jsonp',
+          url: uploadFile,
+          jsonp: 'callback',
+          jsonpCallback: 'json',
+          params: {
+            imgFile: file.target.files[0]
+          }
+        })
+        .then(res => {
+          console.log(res)
+        })
       },
       handleFileChange (file) {
         let files = file.target.files
