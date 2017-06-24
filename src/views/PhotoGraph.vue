@@ -17,7 +17,7 @@
         <div class="take-photo">
           <img v-if="form.idCard" v-lazy="form.idCard" alt="">
           <img v-if="!form.idCard" v-lazy="{src: 'static/img/sfz.png', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
-          <span class="iconfont icon-add">
+          <span class="iconfont icon-add" @click="saveData(1)">
             <input name="idcard" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
           </span>
         </div>
@@ -38,7 +38,7 @@
         <div class="take-photo">
           <img v-if="form.drivingLicense" v-lazy="form.drivingLicense" alt="">
           <img v-if="!form.drivingLicense" v-lazy="{src: 'static/img/jszf.png', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
-          <span class="iconfont icon-add">
+          <span class="iconfont icon-add" @click="saveData(2)">
             <input name="license" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
           </span>
         </div>
@@ -54,8 +54,8 @@
         <div class="take-photo">
           <img v-if="form.subDrivingLicense" v-lazy="form.subDrivingLicense" alt="">
           <img v-if="!form.subDrivingLicense" v-lazy="{src: 'static/img/jsz.png', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
-          <span class="iconfont icon-add">
-            <input name="sublicense" type="file" @change="handleFileChange1" capture="camera" accept='image/*'>
+          <span class="iconfont icon-add" @click="saveData(3)">
+            <input name="sublicense" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
           </span>
         </div>
       </div>
@@ -71,6 +71,7 @@
   import lrz from 'lrz/dist/lrz.all.bundle.js'
   import {uploadFile} from '../config'
   import {XButton} from 'vux'
+  import $ from 'jquery'
   export default {
     head: {
       title: {
@@ -79,6 +80,8 @@
     },
     data () {
       return {
+        url: uploadFile,
+        type: 0,
         form: {
           idCard: '',
           drivingLicense: '',
@@ -90,22 +93,42 @@
       XButton
     },
     methods: {
-      handleFileChange1 (file) {
-        console.log(file.target.files[0])
-        this.$http({
-          method: 'jsonp',
-          url: uploadFile,
-          jsonp: 'callback',
-          jsonpCallback: 'json',
-          params: {
-            imgFile: file.target.files[0]
+      saveData (type) {
+        this.type = type
+      },
+      handleFileChange (files, type) {
+        console.log(this.type)
+        const This = this
+        const file = files.target.files[0]
+        const formData = new FormData()
+        formData.append('imgFile', file)
+        $.ajax({
+          type: 'post',
+          url: This.url,
+          crossDomain: true,
+          jsonp: 'jsoncallback',
+          data: formData,
+          contentType: false,
+          processData: false,
+          complete: function (data) {
+          },
+          success: function (res) {
+            console.log(res)
+            switch (this.type) {
+              case 1:
+                this.form.idCard = res.url
+                break
+              case 2:
+                this.form.drivingLicense = res.url
+                break
+              case 3:
+                this.form.subDrivingLicense = res.url
+                break
+            }
           }
         })
-        .then(res => {
-          console.log(res)
-        })
       },
-      handleFileChange (file) {
+      handleFileChange1 (file) {
         let files = file.target.files
         const _this = this
         lrz(files[0]).then(rst => {

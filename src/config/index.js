@@ -1,4 +1,4 @@
-export const server = 'http://192.168.0.106:8080/zzbao'
+export const server = 'http://192.168.0.105:8080/zzbao'
 export const login = server + '/app/user/login.htm' // 登录api
 export const sms = server + '/app/user/sms.htm' // 短信接口
 export const register = server + '/app/user/regist.htm' // 注册接口
