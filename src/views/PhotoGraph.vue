@@ -18,7 +18,7 @@
           <img v-if="form.idCard" v-lazy="form.idCard" alt="">
           <img v-if="!form.idCard" v-lazy="{src: 'static/img/sfz.png', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
           <span class="iconfont icon-add" @click="saveData(1)">
-            <input name="idcard" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
+            <input name="idCard" type="file" @change="handleFileChange1" capture="camera" accept='image/*'>
           </span>
         </div>
       </div>
@@ -39,7 +39,7 @@
           <img v-if="form.drivingLicense" v-lazy="form.drivingLicense" alt="">
           <img v-if="!form.drivingLicense" v-lazy="{src: 'static/img/jszf.png', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
           <span class="iconfont icon-add" @click="saveData(2)">
-            <input name="license" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
+            <input name="drivingLicense" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
           </span>
         </div>
         <h4 class="sub-module-title sub-line">行驶证副本照</span></h4>
@@ -55,7 +55,7 @@
           <img v-if="form.subDrivingLicense" v-lazy="form.subDrivingLicense" alt="">
           <img v-if="!form.subDrivingLicense" v-lazy="{src: 'static/img/jsz.png', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
           <span class="iconfont icon-add" @click="saveData(3)">
-            <input name="sublicense" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
+            <input name="subDrivingLicense" type="file" @change="handleFileChange" capture="camera" accept='image/*'>
           </span>
         </div>
       </div>
@@ -69,7 +69,7 @@
 </template>
 <script>
   import lrz from 'lrz/dist/lrz.all.bundle.js'
-  import {uploadFile} from '../config'
+  import {uploadFile, uploadBase64} from '../config'
   import {XButton} from 'vux'
   import $ from 'jquery'
   export default {
@@ -81,6 +81,7 @@
     data () {
       return {
         url: uploadFile,
+        url1: uploadBase64,
         type: 0,
         form: {
           idCard: '',
@@ -113,16 +114,16 @@
           complete: function (data) {
           },
           success: function (res) {
-            console.log(res)
-            switch (this.type) {
+            const result = JSON.parse(res)
+            switch (This.type) {
               case 1:
-                this.form.idCard = res.url
+                This.form.idCard = result.url
                 break
               case 2:
-                this.form.drivingLicense = res.url
+                This.form.drivingLicense = result.url
                 break
               case 3:
-                this.form.subDrivingLicense = res.url
+                This.form.subDrivingLicense = result.url
                 break
             }
           }
@@ -130,20 +131,44 @@
       },
       handleFileChange1 (file) {
         let files = file.target.files
-        const _this = this
+        // const _this = this
         lrz(files[0]).then(rst => {
-          switch (file.target.name) {
-            case 'idcard':
-              _this.form.idCard = rst.base64
-              break
-            case 'license':
-              _this.form.drivingLicense = rst.base64
-              break
-            case 'sublicense':
-              _this.form.subDrivingLicense = rst.base64
-              break
+          // switch (file.target.name) {
+          //   case 'idcard':
+          //     _this.form.idCard = rst.base64
+          //     break
+          //   case 'license':
+          //     _this.form.drivingLicense = rst.base64
+          //     break
+          //   case 'sublicense':
+          //     _this.form.subDrivingLicense = rst.base64
+          //     break
+          // }
+          this.handleUpload(rst.base64, file.target.name)
+        })
+      },
+      handleUpload (data, tag) {
+        const This = this
+        const params = {
+          base64Data: data
+        }
+        $.ajax({
+          type: 'post',
+          url: This.url1,
+          crossDomain: true,
+          data: params,
+          dataType: 'json',
+          before: function (req) {
+            console.log(req)
+          },
+          complete: function (data) {
+          },
+          success: function (res) {
+            if (res.status) {
+              This.form[tag] = res.imgUrl
+              console.log(This.form)
+            }
           }
-          console.log(rst)
         })
       },
       handleSubmit () {

@@ -145,13 +145,14 @@
           }
         })
         this.$localStorage.set('insurance', JSON.stringify(this.insurance))
-        this.form.orderInfo = {
+        this.form.orderInfo = JSON.stringify({
           company: JSON.parse(this.$localStorage.get('orderCompany')),
           user: JSON.parse(this.$localStorage.get('orderUser')),
           card: JSON.parse(this.$localStorage.get('orderPic')),
           insurance: this.insurance
-        }
-        console.log(this.insurance)
+        })
+        this.$localStorage.set('order', JSON.stringify(this.form))
+        console.log(this.form)
         this.$http({
           method: 'jsonp',
           url: submitOrder,
@@ -161,6 +162,9 @@
         })
         .then(res => {
           console.log(res)
+          if (res.status) {
+            this.$router.replace('/offer/success/' + this.$route.params.id)
+          }
         })
       },
       handlepull () {

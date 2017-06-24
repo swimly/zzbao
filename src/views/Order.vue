@@ -29,7 +29,7 @@
       return {
         loading: false,
         form: {
-          userId: '09313c0941454f118950266606f3b6be',
+          userId: JSON.parse(this.$localStorage.get('userInfo')).userId,
           status: -1,
           limit: 5,
           pageIndex: 0

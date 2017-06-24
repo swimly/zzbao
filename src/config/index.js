@@ -1,4 +1,5 @@
-export const server = 'http://192.168.0.105:8080/zzbao'
+// export const server = 'http://192.168.0.105:8080/zzbao' // http://liuwbox.com/zzbao
+export const server = 'http://liuwbox.com/zzbao' // http://liuwbox.com/zzbao
 export const login = server + '/app/user/login.htm' // 登录api
 export const sms = server + '/app/user/sms.htm' // 短信接口
 export const register = server + '/app/user/regist.htm' // 注册接口
@@ -26,6 +27,7 @@ export const insurance = server + '/app/insurance/list.htm' // 险种列表
 export const orderList = server + '/app/order/list.htm' // 订单列表
 export const orderDetail = server + '/app/order/detail.htm' // 订单详情
 export const uploadFile = server + '/file/upload/image.htm' // 上传图片
+export const uploadBase64 = server + '/file/upload/image64.htm' // 上传图片
 // export const tokenUrl = server + 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential'
 // export const ticketUrl = server + 'https://api.weixin.qq.com/cgi-bin/ticket/getticket'
 // export const appId = server + 'wxabf1c20c98f9cf4c'
