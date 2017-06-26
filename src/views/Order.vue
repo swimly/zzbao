@@ -128,6 +128,10 @@
             This.list.push(el)
           })
           if (res.body.data.orderList.length < This.form.limit) {
+            console.log('这是最后一页')
+            this.statusNoMore()
+          } else {
+            this.statusLoad()
           }
           done()
           for (const i in this.list) {
@@ -149,6 +153,22 @@
         this.$router.replace(this.bar[index].key)
         this.form.status = this.bar[index].key
         this.getList(() => {}, 1)
+      },
+      statusNoMore () {
+        this.$el.querySelectorAll('.load').forEach(el => {
+          el.style.display = 'none'
+        })
+        this.$el.querySelectorAll('.no-more').forEach(el => {
+          el.style.display = 'block'
+        })
+      },
+      statusLoad () {
+        this.$el.querySelectorAll('.load').forEach(el => {
+          el.style.display = 'block'
+        })
+        this.$el.querySelectorAll('.no-more').forEach(el => {
+          el.style.display = 'none'
+        })
       }
     }
   }
