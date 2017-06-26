@@ -120,7 +120,14 @@
             This.list.push(el)
           })
           if (res.body.data.orderList.length < This.form.limit) {
-            this.$el.querySelector('.load-more').innerHTML = '我是有底线的！'
+            // this.$el.querySelector('.load-more').innerHTML = '我是有底线的！'
+            This.$vux.toast.show({
+              type: 'text',
+              width: '20em',
+              position: 'bottom',
+              text: '没有更多订单了！',
+              time: '1000'
+            })
           }
           done()
           for (const i in this.list) {

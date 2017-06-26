@@ -16,7 +16,7 @@
       <slot></slot>
       <footer class="load-more">
         <slot name="load-more">
-          <span><img style="width:1.6rem;margin-right:0.5rem;" src="static/img/331.svg" alt="">加载中……</span>
+          <span><img style="width:1.6rem;margin-right:0.5rem;" src="static/img/331.svg" alt="">加载中</span>
         </slot>
       </footer>
     </section>

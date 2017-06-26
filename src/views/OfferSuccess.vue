@@ -2,8 +2,8 @@
   <div class="page gray has-btn">
     <div class="h auto content">
       <group gutter="0px" v-if="order">
-        <cell :title="order.user.ownerName" :value="order.user.ownerLicense"></cell>
-        <cell title="保险公司" :value="order.company.companyName"></cell>
+        <cell :title="order.orderInfo.user.ownerName" :value="order.orderInfo.user.ownerLicense"></cell>
+        <cell title="保险公司" :value="order.orderInfo.company.companyName"></cell>
         <cell title="订单号" :value="'46416313544'"></cell>
       </group>
       <div class="row w msg">

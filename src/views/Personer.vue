@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="h auto view" style="padding-top:40px;">
-      <group class="mt-5 sub-line mb-5" title="订单管理">
+      <group class="mt-5 mb-5" title="订单管理">
         <div class="row w order">
           <router-link to="/order/3" class="col v-m col-8">
             <span class="iconfont icon-money red"></span>
@@ -57,7 +57,7 @@
         </cell>
       </group>
       <group gutter="10px" style="margin-bottom:10px;" v-if="userInfo">
-        <x-button @click.native="logout = true" plain type='primary' style="border-left:none;border-right:none;border-radius:0;border-color:#ccc;color:#EB3D00;">注销/登录</x-button>
+        <x-button @click.native="logout = true" plain type='primary' style="border-left:none;border-right:none;border-radius:0;border-color:#ECECEC;color:#EB3D00;">注销/登录</x-button>
       </group>
     </div>
     <confirm v-model="logout" @on-confirm="handleLogout">
@@ -157,8 +157,11 @@
 .default .num{color:#eb3d00;font-size:1.6rem;}
 .default .text{color:#3a3a3a;font-size:1.1rem;}
 .default a:first-child:after{content:"";display:inline-block;width:1px;height:40px;background:#E0E0E0;position:absolute;right:0;top:50%;transform:translateY(-50%)}
+.fix-info{position:fixed;top:160px;left:50%;width:90%;transform:translateX(-50%);border-radius:1.5rem;z-index:100;box-shadow:0 5px 20px #ccc;}
+</style>
+<style scoped>
 .red{background:#FF4C42;}
 .yellow{background:#FFA500;}
 .blue{background:#52C5FE;}
-.fix-info{position:fixed;top:160px;left:50%;width:90%;transform:translateX(-50%);border-radius:1.5rem;z-index:100;box-shadow:0 5px 20px #ccc;}
 </style>
+

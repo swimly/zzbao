@@ -32,4 +32,4 @@ export const uploadBase64 = server + '/file/upload/image64.htm' // 上传图片
 // export const ticketUrl = server + 'https://api.weixin.qq.com/cgi-bin/ticket/getticket'
 // export const appId = server + 'wxabf1c20c98f9cf4c'
 // export const appSecret = server + '4e5337cb2cff85f21385ff8673e1c07a'
-export const time = server + 600 // 获取验证码时间间隔单位：秒
+export const time = 120 // 获取验证码时间间隔单位：秒

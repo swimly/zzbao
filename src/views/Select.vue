@@ -4,7 +4,7 @@
       <group title="强制保险" class="select" v-if="force">
         <Cell class="long" v-for="(item, index) in force" :key="index" v-if="index === 0">
           <div class="checkbox full" slot="icon">
-            <input type="checkbox" checked name="force" :id="'force' + index" v-model="item.select" v-on:change="handlepull">
+            <input type="checkbox" checked name="force" :value="'缴纳'" :id="'force' + index" v-model="item.select" v-on:change="handlepull">
             <span class="iconfont icon-right1"></span>
             <label :for="'force' + index">{{forceName}}</label>
           </div>
@@ -19,7 +19,7 @@
           </div>
           <div class="form select" slot="title" v-if="item.extra">
             <select v-model="item.value">
-              <option v-for="(item, index) in item.extra.split(',')" v-bind:value="item.split(':')[0]">{{item.split(':')[1]}}</option>
+              <option v-for="(item, index) in item.extra.split(',')" v-bind:value="item.split(':')[0]" :key="index">{{item.split(':')[1]}}</option>
             </select>
           </div>
           <div class="checkbox circle right" slot="value" v-if="item.select">
@@ -38,7 +38,7 @@
           </div>
           <div class="form select" slot="title" v-if="item.extra">
             <select v-model="item.value">
-              <option v-for="(item, index) in item.extra.split(',')" v-bind:value="item.split(':')[0]">{{item.split(':')[1]}}</option>
+              <option v-for="(item, index) in item.extra.split(',')" v-bind:value="item.split(':')[0]" :key="index">{{item.split(':')[1]}}</option>
             </select>
           </div>
           <div class="checkbox circle right" slot="value" v-if="item.select">
@@ -85,7 +85,6 @@
       this.handleInsurance()
     },
     created () {
-      console.log(this.$route.params.id)
     },
     methods: {
       handleInsurance () {
@@ -121,26 +120,17 @@
       },
       handleSubmit () {
         this.force.forEach(el => {
-          if (el.value) {
-            delete el.extra
-            delete el.select
-            delete el.type
+          if (el.select) {
             this.insurance.push(el)
           }
         })
         this.basic.forEach(el => {
-          if (el.value) {
-            delete el.extra
-            delete el.select
-            delete el.type
+          if (el.select) {
             this.insurance.push(el)
           }
         })
         this.additional.forEach(el => {
-          if (el.value) {
-            delete el.extra
-            delete el.select
-            delete el.type
+          if (el.select) {
             this.insurance.push(el)
           }
         })
@@ -151,6 +141,7 @@
           card: JSON.parse(this.$localStorage.get('orderPic')),
           insurance: this.insurance
         }
+        console.log(this.form)
         this.$localStorage.set('order', JSON.stringify(this.form))
         this.form.orderInfo = JSON.stringify(this.form.orderInfo)
         this.$http({
@@ -171,7 +162,7 @@
         // 强制保险，联动选择
         for (const i in this.force) {
           if (i) {
-            this.force[i].value = this.force[0].value
+            this.force[i].select = this.force[0].select
           }
         }
       }
