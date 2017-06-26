@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="h" style="min-height:100%;">
     <div class="order-item mt-5" v-for="(item, index) in list" :key="index">
       <ul class="row w white status">
         <li class="col v-m time col-14">{{item.createTime}}</li>

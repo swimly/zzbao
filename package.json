@@ -17,6 +17,7 @@
     "jquery": "^3.2.1",
     "lrz": "^4.9.40",
     "mint-ui": "^2.2.7",
+    "perfect-scrollbar": "^0.7.1",
     "vue": "^2.2.2",
     "vue-base64-file-upload": "^1.0.4",
     "vue-base64-upload": "^1.0.1",

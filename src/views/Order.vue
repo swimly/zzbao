@@ -95,11 +95,19 @@
     methods: {
       onRefresh (done) {
         this.form.pageIndex = 0
+        this.$el.querySelector('.load').style.display = 'none'
+        this.$el.querySelector('.no-more').style.display = 'none'
         this.getList(done, 1)
       },
       onInfinite (done) {
-        this.form.pageIndex ++
-        this.getList(done, 0)
+        this.form.pageIndex = this.list.length / this.form.limit
+        if (this.list.length % this.form.limit) {
+          this.$el.querySelector('.load').style.display = 'none'
+          this.$el.querySelector('.no-more').style.display = 'block'
+        } else {
+          this.$el.querySelector('.load').style.display = 'block'
+          this.getList(done, 0)
+        }
       },
       getList (done, status) {
         const This = this
@@ -120,14 +128,6 @@
             This.list.push(el)
           })
           if (res.body.data.orderList.length < This.form.limit) {
-            // this.$el.querySelector('.load-more').innerHTML = '我是有底线的！'
-            This.$vux.toast.show({
-              type: 'text',
-              width: '20em',
-              position: 'bottom',
-              text: '没有更多订单了！',
-              time: '1000'
-            })
           }
           done()
           for (const i in this.list) {
@@ -136,15 +136,16 @@
           this.list.forEach(el => {
             el.createTime = dateFormat(el.createTime)
           })
-          console.log(this.list)
         })
       },
       handleChange (item, index) {
+        this.form.pageIndex = 0
         this.index = index
         this.$router.replace(this.bar[this.index].key)
         this.form.status = this.bar[index].key
       },
       handleSwiper (index) {
+        this.form.pageIndex = 0
         this.$router.replace(this.bar[index].key)
         this.form.status = this.bar[index].key
         this.getList(() => {}, 1)

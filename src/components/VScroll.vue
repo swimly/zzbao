@@ -16,7 +16,8 @@
       <slot></slot>
       <footer class="load-more">
         <slot name="load-more">
-          <span><img style="width:1.6rem;margin-right:0.5rem;" src="static/img/331.svg" alt="">加载中</span>
+          <span class="load"><img style="width:1.6rem;margin-right:0.5rem;" src="static/img/331.svg" alt="">加载中</span>
+          <span class="no-more">没有更多了哦！</span>
         </slot>
       </footer>
     </section>
@@ -65,6 +66,7 @@ export default {
       this.touching = true
     },
     touchMove (e) {
+      this.$el.querySelector('.load-more').style.display = 'flex'
       if (!this.enableRefresh || this.$el.scrollTop > 0 || !this.touching) {
         return
       }
@@ -143,6 +145,7 @@ export default {
 }
 .yo-scroll .inner {
   position: absolute;
+  min-height:200px;
   top: -4rem;
   width: 100%;
   transition-duration: 300ms;
@@ -185,4 +188,5 @@ export default {
   color:#666;
   background:#eee;
 }
+.yo-scroll .no-more{display:none;}
 </style>
