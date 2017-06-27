@@ -8,7 +8,7 @@
             <span class="iconfont icon-shouji" slot="label"></span>
           </XInput>
         </group>
-        <group gutter="10px">
+        <group gutter="10px" class="code">
           <XInput placeholder="验证码" v-model="form.captcha" :show-clear="false">
             <span class="iconfont icon-yzm" slot="label"></span>
             <x-button class="code" slot="right" type="warn" :disabled="!form.tel" @click.native="handleSendSms" v-show="!show" :show-loading="getting">{{text}}</x-button>
@@ -91,6 +91,8 @@
 .form-panel .weui-cell__ft{position:absolute;right:0;top:50%;transform:translate(0,-50%);}
 .weui-btn.code .weui-loading{position:absolute;left:0.5rem;top:50%;margin-top:-10px !important;}
 .weui-btn.code.weui-btn_loading{padding-left:2rem !important;}
+.code .weui-cell{padding-right:7rem !important;}
+.code .weui-cells{background:none !important}
 </style>
 <style scoped>
 .iconfont{padding:0 0.5rem 0 0;}
