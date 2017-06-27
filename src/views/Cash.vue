@@ -9,9 +9,9 @@
           </cell>
         </group>
         <group gutter="10px">
-          <x-input title="提现金额" placeholder="请输入提现金额" novalidate :show-clear="false" placeholder-align="right" text-align="right" v-model="form.score"></x-input>
+          <x-input title="提现金额" placeholder="请输入提现金额" novalidate :show-clear="false" placeholder-align="right" text-align="right" v-model="payScore" @on-change="handleScore" type="number"></x-input>
           <x-input title="开户银行" placeholder="请填写详细的开户银行分行名称" novalidate :show-clear="false" placeholder-align="right" text-align="right" v-model="form.bankName"></x-input>
-          <x-input title="银行卡号" placeholder="请填写收款银行卡号信息" novalidate :show-clear="false" placeholder-align="right" text-align="right" v-model="form.cardNo"></x-input>
+          <x-input title="银行卡号" placeholder="请填写收款银行卡号信息" novalidate :show-clear="false" placeholder-align="right" text-align="right" v-model="form.cardNo" type="number"></x-input>
           <x-input title="收款人" placeholder="收款账号开户人姓名" novalidate :show-clear="false" placeholder-align="right" text-align="right" v-model="form.cardUser"></x-input>
           <x-input title="支付密码" placeholder="请输入支付密码" novalidate :show-clear="false" placeholder-align="right" type="password" text-align="right" v-model="form.payPwd"></x-input>
         </group>
@@ -46,9 +46,10 @@
         height: '',
         balance: 0,
         hasPayPwd: false,
+        payScore: null,
         form: {
           userId: '',
-          score: '',
+          score: 0,
           cardId: '',
           bankName: '',
           cardNo: '',
@@ -87,31 +88,44 @@
       this.height = document.querySelector('.content').clientHeight + 'px'
     },
     methods: {
+      handleScore () {
+        this.form.score = this.payScore * 10
+      },
       handleSubmit () {
-        this.$http({
-          method: 'jsonp',
-          url: withdraw,
-          jsonp: 'callback',
-          jsonpCallback: 'json',
-          params: this.form,
-          before: () => {
-            this.loading = true
-          }
-        })
-        .then(res => {
-          console.log(res)
-          this.loading = false
+        if (this.form.score > this.balance / 10) {
           this.$vux.toast.show({
             type: 'text',
             width: '20em',
             position: 'bottom',
-            text: res.body.msg,
+            text: '提现金额不得大于可提现金额！',
             time: '1000'
           })
-          if (res.body.status) {
-            this.$router.push('/record')
-          }
-        })
+        } else {
+          this.$http({
+            method: 'jsonp',
+            url: withdraw,
+            jsonp: 'callback',
+            jsonpCallback: 'json',
+            params: this.form,
+            before: () => {
+              this.loading = true
+            }
+          })
+          .then(res => {
+            console.log(res)
+            this.loading = false
+            this.$vux.toast.show({
+              type: 'text',
+              width: '15em',
+              position: 'bottom',
+              text: res.body.msg,
+              time: '1000'
+            })
+            if (res.body.status) {
+              this.$router.push('/record')
+            }
+          })
+        }
       }
     }
   }

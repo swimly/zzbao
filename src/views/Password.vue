@@ -11,7 +11,7 @@
         <group gutter="10px">
           <XInput placeholder="验证码" v-model="form.captcha" :show-clear="false">
             <span class="iconfont icon-yzm" slot="label"></span>
-            <x-button class="code" slot="right" type="warn" @click.native="handleSendSms" v-show="!show" :show-loading="getting">{{text}}</x-button>
+            <x-button class="code" slot="right" type="warn" :disabled="!form.tel" @click.native="handleSendSms" v-show="!show" :show-loading="getting">{{text}}</x-button>
             <x-button v-show="show" slot="right" class="count" style="margin-top:0;" @click.native="handleTips">
               <countdown v-model="time" @on-finish="handleTime" :start="start"></countdown>
               秒重新获取
@@ -86,8 +86,7 @@
   }
 </script>
 <style>
-.form-panel .weui-cell{padding:0.4rem 1rem !important;}
-.form-panel .weui-cells{border-left:1px solid #eee;border-right:1px solid #eee;}
+.form-panel .weui-cell{padding:0.3rem 1rem !important;}
 .form-panel .iconfont{color:#959595;font-size:1.8rem;padding-right:0.5rem;}
 .form-panel .weui-cell__ft{position:absolute;right:0;top:50%;transform:translate(0,-50%);}
 .weui-btn.code .weui-loading{position:absolute;left:0.5rem;top:50%;margin-top:-10px !important;}

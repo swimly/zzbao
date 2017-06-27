@@ -10,9 +10,9 @@
           <p style="padding:0.5rem 0;font-size:1.2rem;color:#8B8B8B;margin-bottom:0.5rem;" v-html="changeStatus(orderDetail.orderStatus).text"></p>
           <flexbox slot="inline-desc">
             <flexbox-item>
-              <x-button v-if="orderDetail.orderStatus === 0" type="warn" @click.native="jump('/pay/info/' + id)">撤销报价</x-button>
+              <x-button v-if="orderDetail.orderStatus === 0" type="warn">撤销报价</x-button>
               <x-button v-if="orderDetail.orderStatus === 2" type="warn" @click.native="jump('/pay/info/' + id)">支付详情</x-button>
-              <x-button v-if="orderDetail.orderStatus === 3" type="warn" @click.native="jump('/pay/info/' + id)">立即付款</x-button>
+              <x-button v-if="orderDetail.orderStatus === 3" type="warn" @click.native="jump('/pay/' + id)">立即付款</x-button>
               <x-button v-if="orderDetail.orderStatus === 5 || orderDetail.orderStatus === 1" type="warn" @click.native="jump('/pay/info/' + id)">重新下单</x-button>
               <x-button v-if="orderDetail.orderStatus === 4" type="warn" @click.native="jump('/pay/info/' + id)">支付详情</x-button>
             </flexbox-item>

@@ -57,13 +57,45 @@
       this.getList(() => {}, null)
     },
     methods: {
+      statusNoMore () {
+        this.$el.querySelectorAll('.load').forEach(el => {
+          el.style.display = 'none'
+        })
+        this.$el.querySelectorAll('.no-more').forEach(el => {
+          el.style.display = 'block'
+        })
+      },
+      statusLoad () {
+        this.$el.querySelectorAll('.load').forEach(el => {
+          el.style.display = 'block'
+        })
+        this.$el.querySelectorAll('.no-more').forEach(el => {
+          el.style.display = 'none'
+        })
+      },
+      statusInit () {
+        this.$el.querySelectorAll('.load').forEach(el => {
+          el.style.display = 'none'
+        })
+        this.$el.querySelectorAll('.no-more').forEach(el => {
+          el.style.display = 'none'
+        })
+      },
       onRefresh (done) {
         this.form.pageIndex = 0
+        this.statusInit()
         this.getList(done, 1)
       },
       onInfinite (done) {
         this.form.pageIndex ++
-        this.getList(done, 0)
+        if (this.list.length % this.form.limit) {
+          this.statusNoMore()
+        } else {
+          this.$el.querySelectorAll('.load').forEach(el => {
+            el.style.display = 'block'
+          })
+          this.getList(done, 0)
+        }
       },
       getList (done, status) {
         const This = this
@@ -85,7 +117,10 @@
             This.list.push(el)
           })
           if (res.body.data.scoreList.length < This.form.limit) {
-            this.$el.querySelector('.load-more').innerHTML = '我是有底线的！'
+            console.log('这是最后一页')
+            this.statusNoMore()
+          } else {
+            this.statusLoad()
           }
           done()
           for (const i in this.list) {

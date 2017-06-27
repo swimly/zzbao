@@ -1,26 +1,26 @@
 <template>
-  <div class="page h">
-    <Scroller lock-x :height="height">
-      <div class="safe-list">
-        <router-link :to="'/offer/' + item.id" :class="item.recommend ? 'row w rec' : 'row w'" v-for="(item, index) in list" :key="index" @click.native="handleSaveData(item)">
-            <span class="col v-m col-8 t-c ptb-10">
-              <span class="img">
-                <img v-lazy="{src: item.listPic, error: 'static/img/err1.png', loading: 'static/img/loading2.gif'}" alt=""/>
-              </span>
+  <div class="page h auto">
+    <div class="safe-list">
+      <router-link :to="'/offer/' + item.id" :class="item.recommend ? 'row w rec' : 'row w'" v-for="(item, index) in list" :key="index" @click.native="handleSaveData(item)">
+          <span class="col v-m col-8 t-c ptb-10">
+            <span class="img">
+              <img v-lazy="{src: item.listPic, error: 'static/img/err1.png', loading: 'static/img/loading2.gif'}" alt=""/>
             </span>
-            <span class="col v-m col-16">
-              <b class="name">{{item.name}}</b>
-              <i>承保地区：{{item.insureArea}}</i>
-              <i>承保车辆：{{item.insureCar}}</i>
-            </span>
-          </router-link>
-      </div>
-    </Scroller>
+          </span>
+          <span class="col v-m col-16">
+            <b class="name">{{item.name}}</b>
+            <i>承保地区：{{item.insureArea}}</i>
+            <i>承保车辆：{{item.insureCar}}</i>
+          </span>
+        </router-link>
+    </div>
   </div>
 </template>
 <script>
-import {mapGetters, mapMutations} from 'vuex'
-import {XImg, Scroller, Loading} from 'vux'
+import {mapMutations} from 'vuex'
+import {XImg, Loading} from 'vux'
+import VScroll from '../components/VScroll'
+import {company} from '../config'
 export default {
   head: {
     title: {
@@ -29,16 +29,26 @@ export default {
   },
   components: {
     XImg,
-    Scroller,
+    VScroll,
     Loading
   },
   created () {
-    this.getOfferList(this)
-  },
-  mounted () {
-    this.height = document.querySelector('.content').clientHeight + 'px'
+    this.getOfferList()
   },
   methods: {
+    getOfferList () {
+      this.$http({
+        method: 'jsonp',
+        url: company,
+        jsonp: 'callback',
+        jsonpCallback: 'json',
+        before: () => {
+        }
+      })
+      .then(res => {
+        this.list = res.body.data.companyList
+      })
+    },
     handleSaveData (item) {
       this.$localStorage.set('orderCompany', JSON.stringify({
         companyId: item.id,
@@ -47,19 +57,13 @@ export default {
       })) // 存储订单公司信息
     },
     ...mapMutations({
-      showLoading: 'updateLoadingStatus',
-      getOfferList: 'getOfferList'
+      showLoading: 'updateLoadingStatus'
     })
   },
   data () {
     return {
-      height: '0px'
+      list: []
     }
-  },
-  computed: {
-    ...mapGetters({
-      list: 'getOfferList'
-    })
   }
 }
 </script>

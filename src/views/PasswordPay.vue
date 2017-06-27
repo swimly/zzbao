@@ -138,3 +138,10 @@
 .form.has-btn .btn{padding:0.7rem 0;}
 .iconfont{font-size:1.8rem;color:#959595;}
 </style>
+<style>
+.form-panel .weui-cell__hd:before,.form-panel .weui-cell__hd:after{content:'';display:inline-block;width:1px;height:6rem;border-left:1px solid #D9D9D9;transform:scaleX(0.5);position:absolute;top:0;left:0;}
+.form-panel .weui-cell__hd:after{left:auto;right:0;}
+.form-panel .iconfont{padding:0;padding-right:0.5rem;}
+.form-panel .weui-cell{padding:0.5rem 1rem;}
+</style>
+

@@ -43,5 +43,6 @@ export default {
 @import './assets/css/style.less';
 </style>
 <style>
+@import './assets/fonts/Capsuula.css';
 @import './assets/css/style.css';
 </style>

@@ -95,17 +95,17 @@
     methods: {
       onRefresh (done) {
         this.form.pageIndex = 0
-        this.$el.querySelector('.load').style.display = 'none'
-        this.$el.querySelector('.no-more').style.display = 'none'
+        this.statusInit()
         this.getList(done, 1)
       },
       onInfinite (done) {
         this.form.pageIndex = this.list.length / this.form.limit
         if (this.list.length % this.form.limit) {
-          this.$el.querySelector('.load').style.display = 'none'
-          this.$el.querySelector('.no-more').style.display = 'block'
+          this.statusNoMore()
         } else {
-          this.$el.querySelector('.load').style.display = 'block'
+          this.$el.querySelectorAll('.load').forEach(el => {
+            el.style.display = 'block'
+          })
           this.getList(done, 0)
         }
       },
@@ -124,6 +124,7 @@
           }
         })
         .then(res => {
+          console.log(res)
           res.body.data.orderList.forEach(el => {
             This.list.push(el)
           })
@@ -165,6 +166,14 @@
       statusLoad () {
         this.$el.querySelectorAll('.load').forEach(el => {
           el.style.display = 'block'
+        })
+        this.$el.querySelectorAll('.no-more').forEach(el => {
+          el.style.display = 'none'
+        })
+      },
+      statusInit () {
+        this.$el.querySelectorAll('.load').forEach(el => {
+          el.style.display = 'none'
         })
         this.$el.querySelectorAll('.no-more').forEach(el => {
           el.style.display = 'none'

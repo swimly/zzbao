@@ -4,15 +4,15 @@
       <div class="face">
         <img src="static/img/face.jpg" alt="">
       </div>
-      <group gutter="30px">
+      <group gutter="30px" class="information">
         <x-input v-model="form.userName" text-align="right">
           <span class="iconfont icon-user" slot="label"></span>
         </x-input>      
       </group>
-      <group gutter="10px">
+      <group gutter="10px" class="information">
         <datetime :title="birthIcon" placeholder="请选择出生日期" :min-year="1950" confirm-text="确认" cancel-text="取消" v-model="form.birthday"></datetime>
       </group>
-      <group gutter="10px">
+      <group gutter="10px" class="information">
         <cell class="sex">
           <span class="iconfont icon-xingbie" slot="icon"></span>
           <ul slot="default" class="row w">
@@ -102,5 +102,8 @@
 <style>
 .vux-datetime .iconfont{color:#959595;font-size:1.8rem;}
 .sex .weui-cell__ft{width:90%;}
-.sex{padding:1.2rem 1rem !important;}
+.sex{padding:0.8rem 1rem !important;}
+.information .weui-cell{padding:0.5rem 1rem;}
+.information .iconfont{padding:0;}
+.information .vux-datetime-value,.information input{color:#666 !important;}
 </style>

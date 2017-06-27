@@ -1,8 +1,8 @@
 <template>
   <div class="page gray h">
     <v-scroll :on-refresh="onRefresh" :on-infinite="onInfinite" v-if="list.length > 0">
-       <div class="safe-list white">
-        <router-link class="row w" :to="'/offer/' + item.id"  v-for="(item, index) in list" :key="index">
+       <ul class="safe-list white">
+        <li class="row w"  v-for="(item, index) in list" :key="index">
           <span class="col v-m col-9 t-l p-5">
             <span class="img large">
               <img v-lazy="{src: item.listPic, error: 'static/img/err1.png', loading: 'static/img/loading1.gif'}" alt=""/>
@@ -15,8 +15,8 @@
               <span class="col v-m t-r status">已兑换</span>
             </span>
           </span>
-        </router-link>
-      </div>
+        </li>
+      </ul>
     </v-scroll>
     <div class="row w h tip" v-if="list.length === 0">
       <div class="col v-m t-c">

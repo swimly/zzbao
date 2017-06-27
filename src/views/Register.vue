@@ -120,8 +120,7 @@
   }
 </script>
 <style>
-.form-panel .weui-cell{padding:0.4rem 1rem !important;}
-.form-panel .weui-cells{border-left:1px solid #eee;border-right:1px solid #eee;}
+.form-panel .weui-cell{padding:0.3rem 1rem !important;}
 .form-panel .iconfont{color:#959595;font-size:1.8rem;padding-right:0.5rem;}
 .form-panel .weui-cell__ft{position:absolute;right:0;top:50%;transform:translate(0,-50%);}
 .weui-btn.code .weui-loading{position:absolute;left:0.5rem;top:50%;margin-top:-10px !important;}
