@@ -139,12 +139,12 @@
       handleChange (item, index) {
         this.form.pageIndex = 0
         this.index = index
-        this.$router.replace(this.bar[this.index].key)
+        // this.$router.replace('/order/' + this.bar[this.index].key + '/' + this.$route.params.userId)
         this.form.status = this.bar[index].key
       },
       handleSwiper (index) {
         this.form.pageIndex = 0
-        this.$router.replace(this.bar[index].key)
+        this.$router.replace('/order/' + this.bar[this.index].key + '/' + this.$route.params.userId)
         this.form.status = this.bar[index].key
         this.getList(() => {}, 1)
       },

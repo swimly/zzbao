@@ -81,7 +81,8 @@
         logout: false,
         balance: 0,
         cumulative: 0,
-        userId: 'null'
+        userId: 'null',
+        id: ''
       }
     },
     computed: {

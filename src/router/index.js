@@ -279,7 +279,7 @@ const router = new Router({
         require(['@/views/Policy'], resolve)
       }
     }, {
-      path: '/order/detail/:id',
+      path: '/orderdetail/:id',
       name: 'orderDetail',
       component: (resolve) => {
         require(['@/views/OrderDetail'], resolve)
