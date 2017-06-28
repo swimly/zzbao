@@ -1,4 +1,4 @@
-import {product, productType} from '../../config'
+import {product, productType, adver} from '../../config'
 const state = {
   mallNav: [],
   productList: []
@@ -29,7 +29,6 @@ const mutations = {
         jsonpCallback: 'json',
         params: This.product,
         before: (req) => {
-          console.log(JSON.stringify(req.params))
           This.list = []
           This.showLoading = true
         }
@@ -37,7 +36,31 @@ const mutations = {
       .then(res => {
         This.list = res.body.data.productList
         This.showLoading = false
-        // console.log(res.body.data)
+        This.$http({
+          method: 'jsonp',
+          url: adver,
+          jsonp: 'callback',
+          jsonpCallback: 'json',
+          params: {
+            position: 1
+          }
+        })
+        .then(res => {
+          This.recommend = res.body.data.aderList
+          This.$http({
+            method: 'jsonp',
+            url: adver,
+            jsonp: 'callback',
+            jsonpCallback: 'json',
+            params: {
+              position: 2
+            }
+          })
+          .then(res => {
+            This.advert = res.body.data.aderList
+            console.log(This.advert)
+          })
+        })
       })
     })
   }

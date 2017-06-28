@@ -1,5 +1,5 @@
 <template>
-  <scroller class="page gray row w feedback">
+  <div class="page gray row w feedback">
     <div class="col v-t t-l p-1" style="padding-top:0;">
       <group title="反馈意见">
         <x-textarea v-model="form.content"></x-textarea>
@@ -9,7 +9,7 @@
       </group>
       <x-button type="warn" style="margin-top:2rem;" :show-loading="loading" @click.native="handleSubmit">提交</x-button>
     </div>
-  </scroller>
+  </div>
 </template>
 <script>
   import {Group, Cell, XInput, XTextarea, XButton} from 'vux'
@@ -38,7 +38,17 @@
       }
     },
     mounted () {
-      this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+      if (this.$localStorage.get('logined') !== 'false') {
+        this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+      } else {
+        this.$vux.toast.show({
+          type: 'text',
+          width: '20em',
+          position: 'bottom',
+          text: '该功能仅对登录用户提供！',
+          time: '1000'
+        })
+      }
     },
     methods: {
       handleSubmit () {

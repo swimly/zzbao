@@ -123,6 +123,12 @@ const router = new Router({
         require(['@/views/Order'], resolve)
       }
     }, {
+      path: '/order/:id/:userId',
+      name: 'ordersId',
+      component: (resolve) => {
+        require(['@/views/Order'], resolve)
+      }
+    }, {
       path: '/wallet',
       name: 'wallet',
       component: (resolve) => {

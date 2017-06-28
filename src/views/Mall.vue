@@ -2,7 +2,7 @@
   <div class="page gray">
     <swiper class="w" :aspect-ratio="315/712" dots-position="center" auto>
       <swiper-item class="swiper-demo-img" v-for="(item, index) in recommend" :key="index">
-        <img class="w" v-lazy="item"/>
+        <img class="w" v-lazy="item.url"/>
       </swiper-item>
     </swiper>
     <div class="p-1 white sub-line">
@@ -25,9 +25,9 @@
         <b class="block fs-1 c-n">{{item.name}}</b>
       </router-link>
     </div>
-    <swiper class="w" :aspect-ratio="83/360" dots-position="center" auto>
+    <swiper class="w" :aspect-ratio="83/360" dots-position="center" auto v-if="advert.length > 0">
       <swiper-item class="swiper-demo-img" v-for="(item, index) in advert" :key="index">
-        <img class="w" v-lazy="item">
+        <img class="w" v-lazy="item.url">
       </swiper-item>
     </swiper>
     <h2 class="title">新品推荐</h2>
@@ -47,6 +47,7 @@
 <script>
   import {Swiper, SwiperItem, XImg} from 'vux'
   import {mapGetters, mapMutations} from 'vuex'
+  import {adver} from '../config'
   export default {
     head: {
       title: {
@@ -58,16 +59,8 @@
         score: 0,
         userId: 'null',
         list: [],
-        recommend: [
-          'static/img/banner1.png',
-          'static/img/banner1.png',
-          'static/img/banner1.png'
-        ],
-        advert: [
-          'static/img/banner2.png',
-          'static/img/banner2.png',
-          'static/img/banner2.png'
-        ],
+        recommend: [],
+        advert: [],
         product: {
           type: 0,
           timeOrder: 0,
@@ -90,6 +83,20 @@
       })
     },
     methods: {
+      getrecommend () {
+        this.$http({
+          method: 'jsonp',
+          url: adver,
+          jsonp: 'callback',
+          jsonpCallback: 'json',
+          params: {
+            position: 1
+          }
+        })
+        .then(res => {
+          console.log(res)
+        })
+      },
       ...mapMutations({
         getProduct: 'getProduct'
       }),

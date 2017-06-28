@@ -31,16 +31,16 @@
     <div class="h auto view" style="padding-top:40px;">
       <group class="mt-5 mb-5" title="订单管理">
         <div class="row w order">
-          <router-link :to="'/order/3' + userId" class="col v-m col-8">
+          <router-link :to="'/order/3/' + userId" class="col v-m col-8">
             <span class="iconfont icon-money red"></span>
             <b>待付款</b>
             <i v-if="false" class="num">2</i>
           </router-link>
-          <router-link :to="'/order/4' + userId" class="col v-m col-8">
+          <router-link :to="'/order/4/' + userId" class="col v-m col-8">
             <span class="iconfont icon-finish yellow"></span>
             <b>已承保</b>
           </router-link>
-          <router-link :to="'/order/-1' + userId" class="col v-m col-8">
+          <router-link :to="'/order/-1/' + userId" class="col v-m col-8">
             <span class="iconfont icon-order blue"></span>
             <b>我的订单</b>
           </router-link>
@@ -66,7 +66,7 @@
   </div>
 </template>
 <script>
-  import {Blur, XImg, Group, Cell, XButton, md5, Confirm} from 'vux'
+  import {Blur, XImg, Group, Cell, XButton, Confirm} from 'vux'
   import ScoreItem from '@/components/ScoreItem'
   import {mapGetters, mapMutations} from 'vuex'
   import {wallet} from '../config'
@@ -91,9 +91,8 @@
       })
     },
     created () {
-      console.log(this.$localStorage.get('logined') === 'true')
       if (this.$localStorage.get('logined') === 'true') {
-        this.userId = md5(JSON.parse(this.$localStorage.get('userInfo')).userId)
+        this.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
         this.$http({
           method: 'jsonp',
           url: wallet,
