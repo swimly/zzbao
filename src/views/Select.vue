@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-  import {Group, Cell, XButton} from 'vux'
+  import {Group, Cell, XButton, md5} from 'vux'
   // import {insurance} from '../config'
   import {submitOrder, insurance} from '../config'
   export default {
@@ -82,6 +82,7 @@
     },
     mounted () {
       this.form.userId = this.$route.params.userId || JSON.parse(this.$localStorage.get('userInfo')).userId
+      this.form.userId = md5(this.form.userId)
       this.handleInsurance()
     },
     created () {
