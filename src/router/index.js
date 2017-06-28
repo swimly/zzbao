@@ -80,7 +80,7 @@ const router = new Router({
         }
       }
     }, {
-      path: '/offer/success/:id',
+      path: '/offer/success/:id/:userId',
       components: {
         default: (resolve) => {
           require(['@/views/OfferSuccess'], resolve)
@@ -273,13 +273,13 @@ const router = new Router({
         require(['@/views/PayInfo'], resolve)
       }
     }, {
-      path: '/policy/:id',
+      path: '/policy/:userId/:orderId',
       name: 'policy',
       component: (resolve) => {
         require(['@/views/Policy'], resolve)
       }
     }, {
-      path: '/orderdetail/:id',
+      path: '/orderdetail/:userId/:orderId',
       name: 'orderDetail',
       component: (resolve) => {
         require(['@/views/OrderDetail'], resolve)

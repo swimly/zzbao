@@ -81,6 +81,7 @@
         logout: false,
         balance: 0,
         cumulative: 0,
+        withdraw: 0,
         userId: 'null',
         id: ''
       }
@@ -106,6 +107,7 @@
         .then(res => {
           this.balance = res.body.data.wallet.balance
           this.cumulative = res.body.data.wallet.cumulative
+          this.withdraw = res.body.data.wallet.withdraw
           this.$localStorage.set('balance', this.balance)
           console.log(res)
         })

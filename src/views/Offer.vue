@@ -18,7 +18,7 @@
 </template>
 <script>
 import {mapMutations} from 'vuex'
-import {XImg, Loading, md5} from 'vux'
+import {XImg, Loading} from 'vux'
 import VScroll from '../components/VScroll'
 import {company} from '../config'
 export default {
@@ -35,7 +35,7 @@ export default {
   created () {
     this.getOfferList()
     if (this.$localStorage.get('logined') !== 'false') {
-      this.userId = md5(JSON.parse(this.$localStorage.get('userInfo')).userId)
+      this.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
     }
   },
   methods: {

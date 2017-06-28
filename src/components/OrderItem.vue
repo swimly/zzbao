@@ -5,7 +5,7 @@
         <li class="col v-m time col-14">{{item.createTime}}</li>
         <li class="col v-m t-r col-10">{{changeStatus(item.orderStatus)}}</li>
       </ul>
-      <router-link :to="'/orderdetail/' + item.id" class="row w good" @click.native="handleSaveData(item)">
+      <router-link :to="'/orderdetail/' + userId + '/' + item.id" class="row w good" @click.native="handleSaveData(item)">
         <span class="col v-m col-6">
           <span class="img">
             <img style="width:100%;height:100%;" v-lazy="{src: item.companyLogo}" alt="">
@@ -35,6 +35,15 @@
         type: Array,
         default: []
       }
+    },
+    data () {
+      return {
+        userId: ''
+      }
+    },
+    created () {
+      this.userId = this.$route.params.userId
+      console.log(this.userId)
     },
     methods: {
       changeStatus (num) {

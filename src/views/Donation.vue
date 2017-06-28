@@ -12,7 +12,7 @@
       <scroller :height="height" lock-x>
         <group gutter="0px">
           <x-input title="获赠用户" placeholder="请输入获赠人的手机号码" novalidate :show-clear="false" placeholder-align="right" text-align="right" v-model="form.target" type="number"></x-input>
-          <x-input title="赠与积分" placeholder="请输入要赠与的积分数额" novalidate :show-clear="false" placeholder-align="right" text-align="right" v-model="form.score" type="number"></x-input>
+          <x-input title="赠与积分" placeholder="请输入要赠与的积分数额" novalidate :show-clear="false" placeholder-align="right" text-align="right" v-model="form.score" type="number" :min="0"></x-input>
           <x-input title="支付密码" placeholder="请输入支付密码" novalidate :show-clear="false" placeholder-align="right" text-align="right" v-model="form.payPwd" type="password"></x-input>
         </group>
         <p class="text" v-if="!hadPayPwd">您的支付密码还未设置，<router-link to="" class="c-red">立即设置</router-link></p>
@@ -64,12 +64,28 @@
     },
     methods: {
       handleSubmit () {
-        if (!this.form.score || !this.form.target || !this.form.payPwd) {
+        if (!this.form.target) {
           this.$vux.toast.show({
             type: 'text',
             width: '15em',
             position: 'bottom',
-            text: '请填写上述信息！',
+            text: '请填写获赠用户！',
+            time: '1000'
+          })
+        } else if (this.form.score <= 0 || !this.form.score) {
+          this.$vux.toast.show({
+            type: 'text',
+            width: '15em',
+            position: 'bottom',
+            text: '赠予积分必须大于0！',
+            time: '1000'
+          })
+        } else if (!this.form.payPwd) {
+          this.$vux.toast.show({
+            type: 'text',
+            width: '15em',
+            position: 'bottom',
+            text: '支付密码不得为空！',
             time: '1000'
           })
         } else if (this.form.score > parseInt(this.balance)) {

@@ -33,7 +33,7 @@
       </cell>
     </group>
     <group gutter="5px" v-if="order.user">
-      <cell title="保单信息" value="查看详情" is-link :link="'/policy/' + id"></cell>
+      <cell title="保单信息" value="查看详情" is-link :link="'/policy/' + form.userId + '/' + form.orderId"></cell>
       <cell title="商业险"></cell>
       <cell>
         <p slot="title">交强险<span>（含车船税）</span></p>
@@ -75,7 +75,7 @@
       }
     },
     created () {
-      this.form.orderId = this.$route.params.id
+      this.form.orderId = this.$route.params.orderId
       this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
       this.getDetail()
     },
@@ -133,8 +133,8 @@
         })
         .then(res => {
           this.order = res.body.data.order
+          console.log(res)
           this.$localStorage.set('order', JSON.stringify(this.order))
-          console.log(this.order)
         })
       }
     }

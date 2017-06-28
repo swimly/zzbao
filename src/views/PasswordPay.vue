@@ -1,5 +1,5 @@
 <template>
-  <scroller class="page gray form-panel">
+  <div class="page gray form-panel">
     <group gutter="0">
       <x-input placeholder="请输入支付密码" ref="pay" v-model="form.payPwd">
         <span class="iconfont icon-mima" slot="label"></span>
@@ -28,7 +28,7 @@
     <group>
       <x-button type="warn" @click.native="handleSubmit" :show-loading="loading">确认修改</x-button>
     </group>
-  </scroller>
+  </div>
 </template>
 <script>
   import {Group, XInput, XButton, Countdown} from 'vux'
@@ -142,6 +142,6 @@
 .form-panel .weui-cell__hd:before,.form-panel .weui-cell__hd:after{content:'';display:inline-block;width:1px;height:6rem;border-left:1px solid #D9D9D9;transform:scaleX(0.5);position:absolute;top:0;left:0;}
 .form-panel .weui-cell__hd:after{left:auto;right:0;}
 .form-panel .iconfont{padding:0;padding-right:0.5rem;}
-.form-panel .weui-cell{padding:0.5rem 1rem;}
+.form-panel .weui-cell{padding:0.3rem 0.3rem 0.3rem 1rem;}
 </style>
 

@@ -1,5 +1,5 @@
 <template>
-  <scroller class="page gray login form-panel">
+  <div class="page gray login form-panel">
     <group gutter="0">
       <x-input placeholder="请输入原始密码！" ref="old" v-model="form.oldPwd">
         <span class="iconfont icon-mima" slot="label"></span>
@@ -18,7 +18,7 @@
     <group gutter="10px">
       <x-button type="warn" @click.native="handleSubmit" :show-loading="loading">确认修改</x-button>
     </group>
-  </scroller>
+  </div>
 </template>
 <script>
   import {Group, XInput, XButton} from 'vux'

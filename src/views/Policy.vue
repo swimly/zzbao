@@ -6,7 +6,7 @@
         <p slot="default"></p>
       </cell>
     </group>
-    <!--<group gutter="10px">
+    <group gutter="10px">
       <cell title="商业险"></cell>
       <cell-form-preview :list="insurance"></cell-form-preview>
     </group>
@@ -15,11 +15,12 @@
         <p slot="title">交强险<span class="c-9">（含车船费）</span></p>
       </cell>
       <cell-form-preview :list="force"></cell-form-preview>
-    </group>-->
+    </group>
   </div>
 </template>
 <script>
   import {Group, Cell, CellFormPreview} from 'vux'
+  import {orderDetail} from '../config'
   export default {
     head: {
       title: {
@@ -36,55 +37,77 @@
         order: JSON.parse(this.$localStorage.get('orderDetail')),
         force: [],
         insurance: [],
-        regard: []
+        regard: [],
+        form: {
+          userId: '',
+          orderId: ''
+        }
       }
     },
     created () {
-      console.log(this.order)
-      // const insurance = this.order.orderInfo.insurance
-      // console.log(insurance)
-      // for (const key in insurance) {
-      //   switch (parseInt(insurance[key].type)) {
-      //     case 0:
-      //       this.force.push({
-      //         label: insurance[key].name,
-      //         value: insurance[key].value
-      //       })
-      //       break
-      //     case 1:
-      //       this.insurance.push({
-      //         label: insurance[key].name,
-      //         value: insurance[key].extra.split(',')[insurance[key].value]
-      //       })
-      //       if (insurance[key].regardless) {
-      //         this.regard.push({
-      //           label: '不计免赔（' + insurance[key].name + '）',
-      //           value: '投保'
-      //         })
-      //       }
-      //       break
-      //     case 2:
-      //       this.insurance.push({
-      //         label: insurance[key].name,
-      //         value: insurance[key].extra.split(',')[insurance[key].value]
-      //       })
-      //       if (insurance[key].regardless) {
-      //         this.regard.push({
-      //           label: '不计免赔（' + insurance[key].name + '）',
-      //           value: '投保'
-      //         })
-      //       }
-      //       break
-      //   }
-      // }
-      // this.insurance.forEach(el => {
-      //   if (el.value) {
-      //     el.value = el.value.split(':')[1]
-      //   }
-      // })
-      // for (const i in this.regard) {
-      //   this.insurance.push(this.regard[i])
-      // }
+      this.form.orderId = this.$route.params.orderId
+      this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+      this.getDetail()
+    },
+    methods: {
+      getDetail () {
+        this.$http({
+          method: 'jsonp',
+          url: orderDetail,
+          jsonp: 'callback',
+          jsonpCallback: 'json',
+          params: this.form
+        })
+        .then(res => {
+          console.log(res)
+          // this.order = res.body.data.order
+          // this.$localStorage.set('order', JSON.stringify(this.order))
+          const insurances = res.body.data.order.insurance
+          console.log(insurances)
+          for (const key in insurances) {
+            switch (parseInt(insurances[key].type)) {
+              case 0:
+                this.force.push({
+                  label: insurances[key].name,
+                  value: insurances[key].value
+                })
+                break
+              case 1:
+                this.insurance.push({
+                  label: insurances[key].name,
+                  value: insurances[key].extra.split(',')[insurances[key].value]
+                })
+                if (insurances[key].regardless) {
+                  this.regard.push({
+                    label: '不计免赔（' + insurances[key].name + '）',
+                    value: '投保'
+                  })
+                }
+                break
+              case 2:
+                this.insurance.push({
+                  label: insurances[key].name,
+                  value: insurances[key].extra.split(',')[insurances[key].value]
+                })
+                if (insurances[key].regardless) {
+                  this.regard.push({
+                    label: '不计免赔（' + insurances[key].name + '）',
+                    value: '投保'
+                  })
+                }
+                break
+            }
+          }
+          this.insurance.forEach(el => {
+            if (el.value) {
+              el.value = el.value.split(':')[1]
+            }
+          })
+          for (const i in this.regard) {
+            this.insurance.push(this.regard[i])
+          }
+        })
+      }
     }
   }
 </script>

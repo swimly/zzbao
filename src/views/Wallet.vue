@@ -61,6 +61,7 @@
         loading: true,
         balance: 0,
         cumulative: 0,
+        withdraw: 0,
         use: 0,
         data: [],
         userId: '',
@@ -106,7 +107,8 @@
           console.log(typeof this.data)
           this.balance = res.body.data.wallet.balance
           this.cumulative = res.body.data.wallet.cumulative
-          this.use = this.cumulative - this.balance
+          this.use = res.body.data.wallet.withdraw
+          console.log(res)
           this.bar.series[0].data = [{
             value: this.use,
             name: '已提现的的积分'
