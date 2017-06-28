@@ -173,6 +173,7 @@
       },
       handleSubmit () {
         const id = this.$route.params.id
+        const userId = this.$route.params.userId
         if (!this.form.idCard || !this.form.drivingLicense || !this.form.subDrivingLicense) {
           this.$vux.toast.show({
             type: 'text',
@@ -187,7 +188,7 @@
             drivingLicense: this.form.drivingLicense,
             subDrivingLicense: this.form.subDrivingLicense
           }))
-          this.$router.push('/offer/select/' + id)
+          this.$router.push('/offer/select/' + id + '/' + userId)
         }
       }
     }

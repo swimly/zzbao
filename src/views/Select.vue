@@ -81,7 +81,7 @@
       XButton
     },
     mounted () {
-      this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+      this.form.userId = this.$route.params.userId || JSON.parse(this.$localStorage.get('userInfo')).userId
       this.handleInsurance()
     },
     created () {

@@ -45,6 +45,13 @@ const router = new Router({
         }
       }
     }, {
+      path: '/offer/:id/:userId',
+      components: {
+        default: (resolve) => {
+          require(['@/views/OfferDetail'], resolve)
+        }
+      }
+    }, {
       path: '/offer/photograph/:id',
       components: {
         default: (resolve) => {
@@ -52,7 +59,21 @@ const router = new Router({
         }
       }
     }, {
+      path: '/offer/photograph/:id/:userId',
+      components: {
+        default: (resolve) => {
+          require(['@/views/PhotoGraph'], resolve)
+        }
+      }
+    }, {
       path: '/offer/select/:id',
+      components: {
+        default: (resolve) => {
+          require(['@/views/Select'], resolve)
+        }
+      }
+    }, {
+      path: '/offer/select/:id/:userId',
       components: {
         default: (resolve) => {
           require(['@/views/Select'], resolve)
