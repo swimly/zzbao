@@ -56,8 +56,12 @@
     },
     mounted () {
       this.balance = this.$localStorage.get('balance')
-      this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
-      this.getList(() => {}, null)
+      this.form.userId = this.$route.params.userId || JSON.parse(this.$localStorage.get('userInfo')).userId
+      if (this.form.userId === 'null') {
+        this.$router.replace('/login')
+      } else {
+        this.getList(() => {}, null)
+      }
     },
     methods: {
       onRefresh (done) {

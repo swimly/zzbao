@@ -55,8 +55,12 @@
       VScroll
     },
     mounted () {
-      this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
-      this.getList(() => {}, null)
+      if (this.$route.params.userId === 'null') {
+        this.$router.replace('/login')
+      } else {
+        this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+        this.getList(() => {}, null)
+      }
     },
     methods: {
       getList (done, status) {

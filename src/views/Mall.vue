@@ -7,12 +7,12 @@
     </swiper>
     <div class="p-1 white sub-line">
       <div class="row w d-line fs-1">
-        <router-link to="/detail" class="col v-m t-c c-6">
+        <router-link :to="'/detail/' + userId" class="col v-m t-c c-6">
           <img class="v-m" style="width:2rem;" v-lazy="'static/img/score.png'" alt=""/>
           <span class="v-m">积分：</span>
           <span class="c-red v-m">{{score}}</span>
         </router-link>
-        <router-link to="/exchange" class="col v-m t-c c-6">
+        <router-link :to="'/exchange/' + userId" class="col v-m t-c c-6">
           <img class="v-m " style="width:2rem;" v-lazy="'static/img/jilu.png'" alt=""/>
           <span class="v-m">兑换记录</span>
         </router-link>
@@ -56,6 +56,7 @@
     data () {
       return {
         score: 0,
+        userId: 'null',
         list: [],
         recommend: [
           'static/img/banner1.png',

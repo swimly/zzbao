@@ -105,6 +105,12 @@ const router = new Router({
         require(['@/views/Exchange'], resolve)
       }
     }, {
+      path: '/exchange/:userId',
+      name: 'exchangeId',
+      component: (resolve) => {
+        require(['@/views/Exchange'], resolve)
+      }
+    }, {
       path: '/order',
       name: 'order',
       component: (resolve) => {
@@ -119,6 +125,12 @@ const router = new Router({
     }, {
       path: '/wallet',
       name: 'wallet',
+      component: (resolve) => {
+        require(['@/views/Wallet'], resolve)
+      }
+    }, {
+      path: '/wallet/:userId',
+      name: 'walletId',
       component: (resolve) => {
         require(['@/views/Wallet'], resolve)
       }
@@ -153,7 +165,19 @@ const router = new Router({
         require(['@/views/Detail'], resolve)
       }
     }, {
+      path: '/detail/:userId',
+      name: 'detail',
+      component: (resolve) => {
+        require(['@/views/Detail'], resolve)
+      }
+    }, {
       path: '/balanceDetail',
+      name: 'balanceDetail',
+      component: (resolve) => {
+        require(['@/views/BalanceDetail'], resolve)
+      }
+    }, {
+      path: '/balanceDetail/:userId',
       name: 'balanceDetail',
       component: (resolve) => {
         require(['@/views/BalanceDetail'], resolve)

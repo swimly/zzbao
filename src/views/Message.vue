@@ -24,7 +24,9 @@
       }
     },
     created () {
-      this.getList()
+      if (this.$localStorage.get('logined') !== 'false') {
+        this.getList()
+      }
     },
     methods: {
       handleChange () {
@@ -37,8 +39,8 @@
           jsonp: 'callback',
           jsonpCallback: 'json',
           params: {
-            // userId: JSON.parse(this.$localStorage.get('userInfo')).userId,
-            userId: '0e9236d6b4474f259cfd1d2f9bf8f3b0',
+            userId: JSON.parse(this.$localStorage.get('userInfo')).userId,
+            // userId: '0e9236d6b4474f259cfd1d2f9bf8f3b0',
             limit: 10,
             pageIndex: 0
           }

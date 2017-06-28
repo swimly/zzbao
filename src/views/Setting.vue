@@ -1,5 +1,5 @@
 <template>
-  <scroller class="page gray">
+  <div class="page gray">
     <group class="mt0" v-if="login">
       <cell title="我的资料" link="/information"></cell>
       <cell title="修改支付密码" link="edit/passwordBypay"></cell>
@@ -12,7 +12,7 @@
       <cell title="意见反馈" link="/feedback"></cell>
       <cell title="关于我们" link="/aboutUs"></cell>
     </group>
-  </scroller>
+  </div>
 </template>
 <script>
   import {Group, Cell} from 'vux'

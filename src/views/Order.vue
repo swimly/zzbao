@@ -65,14 +65,7 @@
           this.getList(() => {}, 1)
         }
       } else {
-        this.$vux.toast.show({
-          type: 'text',
-          width: '10em',
-          position: 'bottom',
-          text: '请先登录！',
-          time: '1000'
-        })
-        this.$router.replace('/personer')
+        this.$router.replace('/login')
       }
     },
     created () {

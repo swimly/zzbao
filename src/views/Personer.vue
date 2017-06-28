@@ -18,11 +18,11 @@
     </blur>
     <div class="p-1 white sub-line fix-info">
       <div class="row w default">
-        <router-link to="/detail" class="col v-m col-12 t-c">
+        <router-link :to="'/detail/' + userId" class="col v-m col-12 t-c">
           <h2 class="num">{{cumulative}}分</h2>
           <p class="text">累计积分收入</p>
         </router-link>
-        <router-link to="/balanceDetail" class="col v-m col-12 t-c">
+        <router-link :to="'/balanceDetail/' + userId" class="col v-m col-12 t-c">
           <h2 class="num">{{balance}}分</h2>
           <p class="text">积分余额</p>
         </router-link>
@@ -31,27 +31,27 @@
     <div class="h auto view" style="padding-top:40px;">
       <group class="mt-5 mb-5" title="订单管理">
         <div class="row w order">
-          <router-link to="/order/3" class="col v-m col-8">
+          <router-link :to="'/order/3' + userId" class="col v-m col-8">
             <span class="iconfont icon-money red"></span>
             <b>待付款</b>
             <i v-if="false" class="num">2</i>
           </router-link>
-          <router-link to="/order/4" class="col v-m col-8">
+          <router-link :to="'/order/4' + userId" class="col v-m col-8">
             <span class="iconfont icon-finish yellow"></span>
             <b>已承保</b>
           </router-link>
-          <router-link to="/order/-1" class="col v-m col-8">
+          <router-link :to="'/order/-1' + userId" class="col v-m col-8">
             <span class="iconfont icon-order blue"></span>
             <b>我的订单</b>
           </router-link>
         </div>
       </group>
       <group title="其他管理">
-        <cell is-link link="/wallet">
+        <cell is-link :link="'/wallet/' + userId">
           <span class="iconfont icon-wallet c-yellow" slot="icon"></span>
           <span slot="title">我的钱包</span>
         </cell>
-        <cell is-link link="/exchange">
+        <cell is-link :link="'/exchange/' + userId">
           <span class="iconfont icon-exchange c-blue" slot="icon"></span>
           <span slot="title">兑换记录</span>
         </cell>
@@ -66,7 +66,7 @@
   </div>
 </template>
 <script>
-  import {Blur, XImg, Group, Cell, XButton, Confirm, Scroller} from 'vux'
+  import {Blur, XImg, Group, Cell, XButton, md5, Confirm} from 'vux'
   import ScoreItem from '@/components/ScoreItem'
   import {mapGetters, mapMutations} from 'vuex'
   import {wallet} from '../config'
@@ -80,7 +80,8 @@
       return {
         logout: false,
         balance: 0,
-        cumulative: 0
+        cumulative: 0,
+        userId: 'null'
       }
     },
     computed: {
@@ -92,14 +93,14 @@
     created () {
       console.log(this.$localStorage.get('logined') === 'true')
       if (this.$localStorage.get('logined') === 'true') {
-        const userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+        this.userId = md5(JSON.parse(this.$localStorage.get('userInfo')).userId)
         this.$http({
           method: 'jsonp',
           url: wallet,
           jsonp: 'callback',
           jsonpCallback: 'json',
           params: {
-            userId: userId
+            userId: this.userId
           }
         })
         .then(res => {
@@ -117,10 +118,14 @@
       Group,
       Cell,
       XButton,
-      Confirm,
-      Scroller
+      Confirm
     },
     methods: {
+      checkAuthor () {
+        if (this.userId === 'null') {
+          console.log('jj')
+        }
+      },
       selectBlur () {
         if (!this.userInfo) {
           return 'static/img/blur.jpg'

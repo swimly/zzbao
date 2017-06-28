@@ -63,6 +63,7 @@
         cumulative: 0,
         use: 0,
         data: [],
+        userId: '',
         bar: {
           series: [{
             name: '积分',
@@ -90,14 +91,14 @@
     },
     created () {
       if (this.$localStorage.get('logined') === 'true') {
-        const userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+        this.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
         this.$http({
           method: 'jsonp',
           url: wallet,
           jsonp: 'callback',
           jsonpCallback: 'json',
           params: {
-            userId: userId
+            userId: this.userId
           }
         })
         .then(res => {
@@ -115,16 +116,7 @@
           }]
         })
       } else {
-        this.$vux.toast.show({
-          type: 'text',
-          width: '20em',
-          position: 'bottom',
-          text: '您尚未登陆！',
-          time: '1000'
-        })
-        setTimeout(() => {
-          this.$router.push('/login')
-        }, 1000)
+        this.$router.push('/login')
       }
     },
     computed: {

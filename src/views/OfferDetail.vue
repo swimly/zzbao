@@ -55,7 +55,15 @@
     created () {
       // 获取保险公司信息
       this.company = JSON.parse(this.$localStorage.get('orderCompany'))
-      console.log(this.company)
+      if (this.$route.params.userId === 'null') {
+        this.$vux.toast.show({
+          type: 'text',
+          width: '20em',
+          position: 'bottom',
+          text: '无法继续操作，请返回登录！',
+          time: '1000'
+        })
+      }
       // if (this.$localStorage.get('logined') !== 'true') {
       //   this.$vux.toast.show({
       //     type: 'text',
@@ -77,7 +85,16 @@
     methods: {
       handleSubmit () {
         this.loading = true
-        if (!this.InsuranceArea) {
+        if (this.$route.params.userId === 'null') {
+          this.$vux.toast.show({
+            type: 'text',
+            width: '10em',
+            position: 'bottom',
+            text: '请登录！',
+            time: '1000'
+          })
+          this.loading = false
+        } else if (!this.InsuranceArea) {
           this.$vux.toast.show({
             type: 'text',
             width: '15em',

@@ -12,7 +12,7 @@
           <h4 class="sub-title">商品详情</h4>
           <p class="text">{{goods.content}}</p>
           <h4 class="sub-title">商品详情</h4>
-          <p class="text" v-html="goods.spec"></p>
+          <div class="text" v-html="goods.spec"></div>
         </div>
       </group>
     </div>
@@ -113,7 +113,17 @@
     },
     methods: {
       handleOrder () {
-        this.order = true
+        if (this.$localStorage.get('logined') === 'false') {
+          this.$vux.toast.show({
+            type: 'text',
+            width: '20em',
+            position: 'bottom',
+            text: '当前未登录，无法进行兑换！',
+            time: '1000'
+          })
+        } else {
+          this.order = true
+        }
       },
       handleSubmit () {
         this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
@@ -158,6 +168,7 @@
   .detail .title:before{display:none;}
   .sub-title{font-size:1.4rem;color:#333;}
   .text{font-size:1rem;color:#666;text-indent:2em;line-height:1.8;}
+  .text img{width:100%;}
   .label{display:inline-block;width:5rem;padding-right:0.5rem;text-align:left;font-size:1rem;color:#666;}
   .do .col{padding:1rem 0.5rem;}
   .form-wrap h2{font-size:1.4rem;color:#666;}
@@ -169,4 +180,5 @@
 .bor .weui-cell__hd{width:5rem;text-align:left;color:#666;}
 .vux-popup-dialog{z-index:5001 !important;}
 .dialog-tip .weui-icon{font-size:3rem;}
+.text img{width:100%;}
 </style>
