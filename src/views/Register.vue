@@ -121,10 +121,13 @@
 </script>
 <style>
 .form-panel .weui-cell{padding:0.3rem 1rem !important;}
+.form-panel .weui-cell__hd:before,.form-panel .weui-cell__hd:after{content:"";display:inline-block;width:0;height:5rem;position:absolute;top:0;left:0;border-left:1px solid #d9d9d9;transform:scaleX(0.5);}
+.form-panel .weui-cell__hd:after{left:auto;right:0;}
 .form-panel .iconfont{color:#959595;font-size:1.8rem;padding-right:0.5rem;}
 .form-panel .weui-cell__ft{position:absolute;right:0;top:50%;transform:translate(0,-50%);}
 .weui-btn.code .weui-loading{position:absolute;left:0.5rem;top:50%;margin-top:-10px !important;}
 .weui-btn.code.weui-btn_loading{padding-left:2rem !important;}
+.form-panel .iconfont{color:#959595;font-size:1.8rem;padding-right:0.5rem;}
 </style>
 <style scoped>
 .tips{padding:0.5rem;}

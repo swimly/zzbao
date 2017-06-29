@@ -83,7 +83,7 @@
             This.list.push(el)
           })
           if (res.body.data.productList.length < This.form.limit) {
-            this.$el.querySelector('.load-more').innerHTML = '我是有底线的！'
+            // this.$el.querySelector('.load-more').innerHTML = '我是有底线的！'
           }
           done()
         })

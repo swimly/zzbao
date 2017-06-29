@@ -213,6 +213,12 @@ const router = new Router({
         require(['@/views/PasswordLogin'], resolve)
       }
     }, {
+      path: '/edit/phone',
+      name: 'editPhone',
+      component: (resolve) => {
+        require(['@/views/Phone'], resolve)
+      }
+    }, {
       path: '/aboutUs',
       name: 'aboutUs',
       component: (resolve) => {

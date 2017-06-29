@@ -58,8 +58,8 @@
     },
     mounted () {
       this.height = document.querySelector('.vux-slider').clientHeight + 'px'
-      if (this.$localStorage.get('logined') === 'true') {
-        this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+      if (this.$route.params.userId) {
+        this.form.userId = this.$route.params.userId
         this.form.status = this.$route.params.id
         if (this.form.status === '-1') {
           this.getList(() => {}, 1)

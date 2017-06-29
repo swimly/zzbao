@@ -1,4 +1,4 @@
-import {login, sms, register, editPwd, information} from '../../config'
+import {login, sms, register, editPwd, information, time} from '../../config'
 const state = {
   logined: false,
   userInfo: {}
@@ -300,13 +300,23 @@ const mutations = {
               This.getting = false
               This.isReg = true
             }
-            This.$vux.toast.show({
-              type: 'text',
-              width: '20em',
-              position: 'bottom',
-              text: res.body.msg,
-              time: '3000'
-            })
+            if (res.body.status) {
+              This.$vux.toast.show({
+                type: 'text',
+                width: '20em',
+                position: 'bottom',
+                text: '验证码获取成功，有效期' + (time / 60) + '分钟',
+                time: '3000'
+              })
+            } else {
+              This.$vux.toast.show({
+                type: 'text',
+                width: '20em',
+                position: 'bottom',
+                text: '验证码获取失败，请稍后重试！',
+                time: '3000'
+              })
+            }
           })
         } else {
           This.$vux.toast.show({

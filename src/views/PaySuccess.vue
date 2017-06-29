@@ -8,7 +8,7 @@
             <x-button plain type="primary" class="custom-primary-red" @click.native="jump('/orderdetail/' + userId + '/' + orderId)">查看订单</x-button>
           </li>
           <li class="col v-m col-12" style="padding:0 4rem 0 0.5rem;">
-            <x-button plain type="primary" class="custom-primary-red">返回首页</x-button>
+            <x-button plain type="primary" class="custom-primary-red" @click.native="jump('/')">返回首页</x-button>
           </li>
         </ul>
       </div>
