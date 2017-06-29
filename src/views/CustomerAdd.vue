@@ -1,72 +1,40 @@
 <template>
-  <div class="customer">
+  <div class="customer gray">
     <header class="row w cus-head">
       <span class="col v-m t-c iconfont icon-back"></span>
       <h2 class="col v-m t-c cus-tit">添加客户</h2>
       <a href="#" class="col v-m t-c cus-edit" @click="submit">完成</a>
     </header>
-    <main class="cus-main">
-      <ul>
-        <li class="row w">
-          <p class="col v-m t-l">姓名</p>
-          <p class="col v-m t-r">
-            <input type="text" placeholder="请输入真实姓名" v-model="form.customer.name">
-          </p>
-        </li>
-        <li class="row w">
-          <p class="col v-m t-l">电话</p>
-          <p class="col v-m t-r">
-            <input type="text" placeholder="请输入真实手机号" v-model="form.customer.phone">
-          </p>
-        </li>
-        <li class="row w">
-          <selectCity title="城市" value="value"></selectCity>
-        </li>
-        <li class="row w">
-          <p class="col v-m t-l">车牌号</p>
-          <p class="col v-m t-r">
-            <input type="text" placeholder="请输入车牌号" v-model="form.customer.carNo">
-          </p>
-        </li>
-        <li class="row w">
-          <p class="col v-m t-l">车辆识别代号</p>
-          <p class="col v-m t-r">
-            <input type="text" placeholder="请输入车辆识别代号" v-model="form.customer.vin">
-          </p>
-        </li>
-        <li class="row w">
-          <p class="col v-m t-l">发动机号</p>
-          <p class="col v-m t-r">
-            <input type="text" placeholder="请输入发动机号" v-model="form.customer.engine">
-          </p>
-        </li>
-        <li class="row w">
-          <p class="col v-m t-l">注册登记日期</p>
-          <p class="col v-m t-r">
-            <input type="date" value="2016-05-04" v-model="form.customer.registTime">
-          </p>
-        </li>
-        <li class="row w">
-          <p class="col v-m t-l">保险到期日期</p>
-          <p class="col v-m t-r">
-            <input type="date" value="2017-05-04" v-model="form.customer.expireTime">
-          </p>
-        </li>
-        <li>
-          <p class="note">备注</p>
-          <p>
-            <textarea type="text" placeholder="请填写备注" v-model="form.customer.note"></textarea>
-          </p>
-        </li>
-      </ul>
-    </main>
+      <group gutter="0">
+        <x-input title="姓名" placeholder="请输入真实姓名" placeholder-align="right" text-align="right">
+          <span class="iconfont icon-tongxunlu" slot="right" style="font-size:1.6rem;vertical-align:middle;color:#76CD62;"></span>
+        </x-input>
+        <x-input title="电话" placeholder="请输入真实手机号" placeholder-align="right" text-align="right">
+        </x-input>
+      </group>
+      <group gutter="10px">
+        <selectCity title="城市" :value="form.customer.areaFullName"></selectCity>
+        <x-input title="车牌号" placeholder="请输入车牌号" placeholder-align="right" text-align="right"></x-input>
+        <x-input title="车辆识别代号" placeholder="请输入车辆识别代号" placeholder-align="right" text-align="right"></x-input>
+        <x-input title="发动机号" placeholder="请输入发动机号" placeholder-align="right" text-align="right"></x-input>
+        <datetime title="注册登记日期" confirm-text="确认" cancel-text="取消"></datetime>
+        <datetime title="保险到期日期" confirm-text="确认" cancel-text="取消"></datetime>
+        <x-textarea title="备注" text-align="right" v-model="form.customer.note"></x-textarea>
+      </group>
   </div>
 </template>
 <script>
+  import { Group, Cell, XInput, XButton, XTextarea, Datetime } from 'vux'
   import selectCity from '@/components/SelectCity'
   export default {
     components: {
-      selectCity
+      Group,
+      Cell,
+      XInput,
+      XButton,
+      XTextarea,
+      selectCity,
+      Datetime
     },
     data () {
       return {

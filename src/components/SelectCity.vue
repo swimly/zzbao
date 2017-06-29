@@ -1,27 +1,17 @@
 <template>
   <div>
     <group gutter="0">
-      <cell :title="title" is-link :value="selected" @click.native="show = true" class="address"></cell>
+      <cell :title="title" is-link :value="selected" @click.native="handleOpen" class="address"></cell>
     </group>
     <div v-transfer-dom>
       <popup v-model="show" position="bottom" height="60%" class="bg-f select">
         <tab active-color='#EB3D00' v-model="index" class="select-tab">
-          <tab-item :selected="index === active" v-for="(item, index) in tab" @click.native="active = index" :key="index">{{item}}</tab-item>
+          <tab-item :selected="index === active" v-for="(item, index) in tab" :key="index" @click.native="handleClick(index)">{{item.text}}</tab-item>
         </tab>
-        <swiper v-model="active" class="select-list" :show-dots="false" height="100%" :threshold="100">
-          <swiper-item>
+        <swiper v-model="active" class="select-list" :loop="false" :show-dots="false" height="100%" :threshold="100" @on-index-change="handleChange">
+          <swiper-item v-for="(item, idx) in tab" :key="idx">
             <ul class="list" id="list">
-              <li v-for="(item, index) in areaList" :key="index" @click="findCity(item.id, item.text)">{{item.text}}</li>
-            </ul>
-          </swiper-item>
-          <swiper-item>
-            <ul class="list">
-              <li v-for="(item, index) in cityList" :key="index" @click="findDist(item.id, item.text)">{{item.text}}</li>
-            </ul>
-          </swiper-item>
-          <swiper-item>
-            <ul class="list">
-              <li v-for="(item, index) in distList" :key="index" @click="showDist(item.id, item.text)">{{item.text}}</li>
+              <li v-for="(item, index) in areaList" :key="index" @click="handleSwiper(item.id, item.text, idx)">{{item.text}}</li>
             </ul>
           </swiper-item>
         </swiper>
@@ -41,24 +31,40 @@
 <script>
 import {mapMutations} from 'vuex'
 import {Group, Popup, Tab, TabItem, XButton, Swiper, Cell, SwiperItem, TransferDom, XSwitch} from 'vux'
+import {area} from '../config'
 export default {
-  name: 'hello',
   data () {
     return {
-      tab: ['省', '市', '区'],
+      tab: [{
+        text: '省',
+        id: 0
+      }, {
+        text: '市',
+        id: 0
+      }, {
+        text: '区',
+        id: 0
+      }],
       selected: '请选择',
+      areaId: [],
       show: false,
       index: 0,
       active: 0,
-      areaList: [],
-      cityList: [],
-      distList: []
+      areaList: []
     }
   },
   props: {
     title: {
       type: String,
       default: ''
+    },
+    value: {
+      type: String,
+      default: '请选择'
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   },
   directives: {
@@ -76,69 +82,90 @@ export default {
     XSwitch
   },
   methods: {
-    // 获取一级列表
-    getAreaList (id) {
+    submit () {
+      let area = ''
+      this.tab.forEach(el => {
+        if (el.id !== 0) {
+          area += el.text
+        }
+      })
+      this.selected = area
+      this.show = false
+      this.init()
+    },
+    handleSwiper (areaId, text, index) {
+      console.log(index, areaId, text)
+      this.tab[index] = {
+        id: areaId,
+        text: text
+      }
+      this.areaId[index] = areaId
+      if (index < 2) {
+        this.index = this.active = index + 1
+      } else {
+        this.index = this.active = index
+        let area = ''
+        this.tab.forEach(el => {
+          area += el.text
+        })
+        this.selected = area
+        this.show = false
+        this.init()
+      }
+      this.getData(areaId, text, index)
+    },
+    handleClick (index) {
+      this.index = this.active = index
+    },
+    handleChange (index) {
+      this.index = this.active = index
+      if (index === 0) {
+        this.getData(0, '请选择', 0)
+      } else {
+        this.getData(this.tab[index - 1].id, this.tab[index - 1].text, index)
+      }
+    },
+    getData (areaId, text, index) {
       this.$http({
         method: 'jsonp',
-        url: 'http://liuwbox.com/zzbao/app/insurance/area.htm?id=' + id,
+        url: area,
         jsonp: 'callback',
-        jsonpCallback: 'json'
+        jsonpCallback: 'json',
+        params: {
+          id: areaId
+        }
       })
       .then(res => {
         this.areaList = res.body.data.areaList
       })
-      this.getArea(id)
     },
-    // 获取二级列表
-    findCity (id, text) {
-      this.index = this.active = 1
-      this.$http({
-        method: 'jsonp',
-        url: 'http://liuwbox.com/zzbao/app/insurance/area.htm?id=' + id,
-        jsonp: 'callback',
-        jsonpCallback: 'json'
-      })
-      .then(res => {
-        this.cityList = res.body.data.areaList
-      })
-      this.tab[0] = text
-      this.getArea(id)
+    handleOpen () {
+      if (!this.readonly) {
+        this.show = true
+        this.getData(this.tab[0].id, this.tab[0].text, 0)
+      }
     },
-    // 获取三级列表
-    findDist (id, text) {
-      this.index = this.active = 2
-      this.$http({
-        method: 'jsonp',
-        url: 'http://liuwbox.com/zzbao/app/insurance/area.htm?id=' + id,
-        jsonp: 'callback',
-        jsonpCallback: 'json'
-      })
-      .then(res => {
-        this.distList = res.body.data.areaList
-      })
-      this.tab[1] = text
-      this.getArea(id)
-    },
-    // 显示区域
-    showDist (id, text) {
-      this.tab[2] = text
-      this.show = false
-      this.selected = this.tab.join(' ')
-      this.getArea(id)
-    },
-    // 提交数据
-    submit () {
-      this.show = false
-      this.selected = this.tab.join(' ')
-      this.getArea(this.selected)
-      console.log(this.tab)
+    init () {
+      this.index = this.active = 0
+      this.tab = [{
+        text: '省',
+        id: 0
+      }, {
+        text: '市',
+        id: 0
+      }, {
+        text: '区',
+        id: 0
+      }]
     },
     ...mapMutations({
       getArea: 'getInsuranceArea'
     })
   },
   created () {
-    this.getAreaList(0)
+    if (this.value) {
+      this.selected = this.value
+    }
   }
 }
 </script>

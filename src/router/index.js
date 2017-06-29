@@ -172,7 +172,7 @@ const router = new Router({
       }
     }, {
       path: '/detail/:userId',
-      name: 'detail',
+      name: 'detailId',
       component: (resolve) => {
         require(['@/views/Detail'], resolve)
       }
@@ -184,7 +184,7 @@ const router = new Router({
       }
     }, {
       path: '/balanceDetail/:userId',
-      name: 'balanceDetail',
+      name: 'balanceDetailId',
       component: (resolve) => {
         require(['@/views/BalanceDetail'], resolve)
       }
@@ -303,7 +303,7 @@ const router = new Router({
         require(['@/views/Track'], resolve)
       }
     }, {
-      path: '/customer/:customerId',
+      path: '/customer/:userId/:customerId',
       name: 'CustomerDetail',
       component: (resolve) => {
         require(['@/views/CustomerDetail'], resolve)
