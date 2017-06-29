@@ -80,7 +80,7 @@ const router = new Router({
         }
       }
     }, {
-      path: '/offer/success/:id/:userId',
+      path: '/offersuccess/:orderId/:userId',
       components: {
         default: (resolve) => {
           require(['@/views/OfferSuccess'], resolve)
@@ -255,13 +255,13 @@ const router = new Router({
         require(['@/views/Password'], resolve)
       }
     }, {
-      path: '/pay/:id',
+      path: '/pay/:userId/:orderId',
       name: 'pay',
       component: (resolve) => {
         require(['@/views/Pay'], resolve)
       }
     }, {
-      path: '/pay/success/:id',
+      path: '/paysuccess/:userId/:orderId',
       name: 'paysuccess',
       component: (resolve) => {
         require(['@/views/PaySuccess'], resolve)
@@ -291,7 +291,7 @@ const router = new Router({
         require(['@/views/Browser'], resolve)
       }
     }, {
-      path: '/track/:id',
+      path: '/track/:userId/:orderId',
       name: 'track',
       component: (resolve) => {
         require(['@/views/Track'], resolve)

@@ -3,7 +3,7 @@
     <div class="content h auto">
       <group title="订单信息">
         <cell title="投保公司" value="太平洋保险"></cell>
-        <cell title="保单信息" value="保单详情" is-link :link="'/policy/' + id"></cell>
+        <cell title="保单信息" value="保单详情" is-link :link="'/policy/' + userId + '/' + orderId"></cell>
         <cell title="商业险" value="￥2837.50"></cell>
         <cell title="交强险" value="￥760.00"></cell>
         <cell title="车船税" value="￥360.00"></cell>
@@ -36,12 +36,10 @@
       XButton,
       Radio
     },
-    created () {
-      this.id = this.$route.params.id
-    },
     data () {
       return {
-        id: 0,
+        userId: this.$route.params.userId,
+        orderId: this.$route.params.orderId,
         loading: false,
         paymodel: 1,
         pay: [{
@@ -57,12 +55,11 @@
     },
     methods: {
       handlePay () {
-        const id = this.$route.params.id
         this.loading = true
         const This = this
         setTimeout(() => {
           This.loading = false
-          This.$router.push('/pay/success/' + id)
+          This.$router.push('/paysuccess/' + this.userId + '/' + this.orderId)
         }, 2000)
       }
     }

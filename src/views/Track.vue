@@ -2,16 +2,13 @@
   <div class="page gray">
     <timeline>
       <timeline-item>
-          <h4 class="recent">【广东】 广州市 已发出</h4>
-          <p class="recent">2016-04-17 12:00:00</p>
+          <h4 class="recent">待付款</h4>
       </timeline-item>
       <timeline-item>
-          <h4> 申通快递员 广东广州 收件员 xxx 已揽件</h4>
-          <p>2016-04-16 10:23:00</p>
+          <h4>报价成功</h4>
       </timeline-item>
       <timeline-item>
-          <h4> 商家正在通知快递公司揽件</h4>
-          <p>2016-04-15 9:00:00</p>
+          <h4>提交报价</h4>
       </timeline-item>
     </timeline>
   </div>
@@ -22,6 +19,33 @@
     components: {
       Timeline,
       TimelineItem
+    },
+    data () {
+      return {
+        list: [{
+          status: 0,
+          text: '提交报价'
+        }, {
+          status: 1,
+          text: '报价成功'
+        }, {
+          status: 1,
+          text: '待付款'
+        }, {
+          status: 1,
+          text: '已付款'
+        }, {
+          status: 1,
+          text: '待出单'
+        }, {
+          status: 1,
+          text: '已出单'
+        }],
+        status: JSON.parse(this.$localStorage.get('orderDetail')).orderStatus
+      }
+    },
+    created () {
+      console.log(this.status)
     }
   }
 </script>

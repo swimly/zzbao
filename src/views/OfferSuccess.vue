@@ -28,6 +28,7 @@
 </template>
 <script>
   import {Group, Cell, XButton} from 'vux'
+  import {orderDetail} from '../config'
   export default {
     components: {
       Group,
@@ -36,6 +37,10 @@
     },
     data () {
       return {
+        form: {
+          orderId: this.$route.params.orderId,
+          userId: this.$route.params.userId
+        },
         order: {
           user: {
             ownerName: '',
@@ -47,14 +52,27 @@
         }
       }
     },
-    methods: {
-      handleSubmit () {
-        this.$router.push('/policy/' + this.$route.params.id)
-      }
-    },
     created () {
       this.order = JSON.parse(this.$localStorage.get('order'))
       console.log(this.order)
+    },
+    methods: {
+      handleSubmit () {
+        this.$router.push('/policy/' + this.form.userId + '/' + this.$route.params.orderId)
+      },
+      getOrder () {
+        this.$http({
+          method: 'jsonp',
+          url: orderDetail,
+          jsonp: 'callback',
+          jsonpCallback: 'json',
+          params: this.form
+        })
+        .then(res => {
+          this.order = res.orderInfo
+          console.log(res)
+        })
+      }
     }
   }
 </script>

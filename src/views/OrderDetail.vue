@@ -10,10 +10,10 @@
           <p style="padding:0.5rem 0;font-size:1.2rem;color:#8B8B8B;margin-bottom:0.5rem;" v-html="changeStatus(orderDetail.orderStatus).text"></p>
           <flexbox slot="inline-desc">
             <flexbox-item>
-              <x-button v-if="orderDetail.orderStatus === 0" type="warn">撤销报价</x-button>
+              <x-button v-if="orderDetail.orderStatus === 0" type="warn" @click.native="handleBack">撤销报价</x-button>
               <x-button v-if="orderDetail.orderStatus === 2" type="warn" @click.native="jump('/pay/info/' + id)">支付详情</x-button>
-              <x-button v-if="orderDetail.orderStatus === 3" type="warn" @click.native="jump('/pay/' + id)">立即付款</x-button>
-              <x-button v-if="orderDetail.orderStatus === 5 || orderDetail.orderStatus === 1" type="warn" @click.native="jump('/pay/info/' + id)">重新下单</x-button>
+              <x-button v-if="orderDetail.orderStatus === 3" type="warn" @click.native="jump('/pay/' + form.userId + '/' + form.orderId)">立即付款</x-button>
+              <x-button v-if="orderDetail.orderStatus === 5 || orderDetail.orderStatus === 1" type="warn" @click.native="jump('/offer')">重新下单</x-button>
               <x-button v-if="orderDetail.orderStatus === 4" type="warn" @click.native="jump('/pay/info/' + id)">支付详情</x-button>
             </flexbox-item>
             <flexbox-item>
@@ -24,7 +24,7 @@
         </div>
         <ul class="row w" slot="inline-desc">
           <li class="col v-m col-12 t-c">
-            <router-link :to="'/track/' + id"><img style="width:2rem;vertical-align:middle" src="static/img/order.png" alt=""><span class="v-m">订单跟踪</span></router-link>
+            <router-link :to="'/track/'+ form.userId + '/' + form.orderId"><img style="width:2rem;vertical-align:middle" src="static/img/order.png" alt=""><span class="v-m">订单跟踪</span></router-link>
           </li>
           <li class="col v-m col-12 t-c">
             <router-link to=""><img style="width:2rem;vertical-align:middle" src="static/img/kefu.png" alt=""><span class="v-m">联系客服</span></router-link>
@@ -53,7 +53,7 @@
 </template>
 <script>
   import {Group, Cell, XButton, Flexbox, FlexboxItem, Divider} from 'vux'
-  import {orderDetail} from '../config'
+  import {orderDetail, backOrder} from '../config'
   export default {
     components: {
       Group,
@@ -76,10 +76,30 @@
     },
     created () {
       this.form.orderId = this.$route.params.orderId
-      this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
+      this.form.userId = this.$route.params.userId
       this.getDetail()
     },
     methods: {
+      handleBack () {
+        this.$http({
+          method: 'jsonp',
+          url: backOrder,
+          jsonp: 'callback',
+          jsonpCallback: 'json',
+          params: this.form
+        })
+        .then(res => {
+          if (res.body.status) {
+            this.$vux.toast.show({
+              type: 'text',
+              width: '20em',
+              position: 'bottom',
+              text: '成功撤销订单，欢迎再次为您服务！',
+              time: '1000'
+            })
+          }
+        })
+      },
       changeStatus (num) {
         switch (num) {
           case 0:

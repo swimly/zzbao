@@ -63,46 +63,62 @@
           // this.order = res.body.data.order
           // this.$localStorage.set('order', JSON.stringify(this.order))
           const insurances = res.body.data.order.insurance
-          console.log(insurances)
           for (const key in insurances) {
-            switch (parseInt(insurances[key].type)) {
-              case 0:
-                this.force.push({
-                  label: insurances[key].name,
-                  value: insurances[key].value
+            if (parseInt(insurances[key].type) === 1 || parseInt(insurances[key].type) === 2) {
+              this.insurance.push({
+                label: insurances[key].name,
+                value: insurances[key].value
+              })
+              if (insurances[key].regardless) {
+                this.regard.push({
+                  label: '不计免赔(' + insurances[key].name + ')',
+                  value: '投保'
                 })
-                break
-              case 1:
-                this.insurance.push({
-                  label: insurances[key].name,
-                  value: insurances[key].extra.split(',')[insurances[key].value]
-                })
-                if (insurances[key].regardless) {
-                  this.regard.push({
-                    label: '不计免赔（' + insurances[key].name + '）',
-                    value: '投保'
-                  })
-                }
-                break
-              case 2:
-                this.insurance.push({
-                  label: insurances[key].name,
-                  value: insurances[key].extra.split(',')[insurances[key].value]
-                })
-                if (insurances[key].regardless) {
-                  this.regard.push({
-                    label: '不计免赔（' + insurances[key].name + '）',
-                    value: '投保'
-                  })
-                }
-                break
+              }
+            } else {
+              this.force.push({
+                label: insurances[key].name,
+                value: insurances[key].value
+              })
             }
+            // switch (parseInt(insurances[key].type)) {
+            //   case 0:
+            //     this.force.push({
+            //       label: insurances[key].name,
+            //       value: insurances[key].value
+            //     })
+            //     break
+            //   case 1:
+            //     this.insurance.push({
+            //       label: insurances[key].name,
+            //       value: insurances[key].name
+            //     })
+            //     if (insurances[key].regardless) {
+            //       this.regard.push({
+            //         label: '不计免赔（' + insurances[key].name + '）',
+            //         value: '投保'
+            //       })
+            //     }
+            //     break
+            //   case 2:
+            //     this.insurance.push({
+            //       label: insurances[key].name,
+            //       value: insurances[key].value
+            //     })
+            //     if (insurances[key].regardless) {
+            //       this.regard.push({
+            //         label: '不计免赔（' + insurances[key].name + '）',
+            //         value: '投保'
+            //       })
+            //     }
+            //     break
+            // }
           }
-          this.insurance.forEach(el => {
-            if (el.value) {
-              el.value = el.value.split(':')[1]
-            }
-          })
+          // this.insurance.forEach(el => {
+          //   if (el.value) {
+          //     el.value = el.value.split(':')[1]
+          //   }
+          // })
           for (const i in this.regard) {
             this.insurance.push(this.regard[i])
           }

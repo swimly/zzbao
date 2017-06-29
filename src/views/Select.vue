@@ -154,7 +154,7 @@
         .then(res => {
           console.log(res)
           if (res.status) {
-            this.$router.replace('/offer/success/' + this.$route.params.id + '/' + this.form.userId)
+            this.$router.replace('/offersuccess/' + res.body.data.orderId + '/' + this.form.userId)
           }
         })
       },

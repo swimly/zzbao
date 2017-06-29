@@ -5,7 +5,7 @@
         <h2 class="tip"><span class="iconfont icon-correct"></span>订单提交成功</h2>
         <ul class="row w" style="margin-top:1rem;">
           <li class="col v-m col-12" style="padding:0 0.5rem 0 4rem;">
-            <x-button plain type="primary" class="custom-primary-red" @click.native="jump('/order/detail/' + id)">查看订单</x-button>
+            <x-button plain type="primary" class="custom-primary-red" @click.native="jump('/orderdetail/' + userId + '/' + orderId)">查看订单</x-button>
           </li>
           <li class="col v-m col-12" style="padding:0 4rem 0 0.5rem;">
             <x-button plain type="primary" class="custom-primary-red">返回首页</x-button>
@@ -30,7 +30,8 @@
     },
     data () {
       return {
-        id: 0
+        userId: this.$route.params.userId,
+        orderId: this.$route.params.orderId
       }
     },
     mounted () {

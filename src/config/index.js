@@ -29,6 +29,7 @@ export const orderDetail = server + '/app/order/detail.htm' // 订单详情
 export const uploadFile = server + '/file/upload/image.htm' // 上传图片
 export const uploadBase64 = server + '/file/upload/image64.htm' // 上传图片
 export const adver = server + '/app/index/adver.htm' // 轮播图
+export const backOrder = server + '/app/order/cancel.htm' // 撤销报价
 // export const tokenUrl = server + 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential'
 // export const ticketUrl = server + 'https://api.weixin.qq.com/cgi-bin/ticket/getticket'
 // export const appId = server + 'wxabf1c20c98f9cf4c'
