@@ -302,6 +302,24 @@ const router = new Router({
       component: (resolve) => {
         require(['@/views/Track'], resolve)
       }
+    }, {
+      path: '/customer/:customerId',
+      name: 'CustomerDetail',
+      component: (resolve) => {
+        require(['@/views/CustomerDetail'], resolve)
+      }
+    }, {
+      path: '/addCustomer/:userId',
+      name: 'CustomerAdd',
+      component: (resolve) => {
+        require(['@/views/CustomerAdd'], resolve)
+      }
+    }, {
+      path: '/editCustomer/:userId/:customerId',
+      name: 'CustomerEdit',
+      component: (resolve) => {
+        require(['@/views/CustomerEdit'], resolve)
+      }
     }
   ]
 })
