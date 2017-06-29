@@ -32,6 +32,7 @@
   import {Group, XAddress, Cell, XButton, XImg, XInput} from 'vux'
   import selectCity from '@/components/SelectCity'
   export default {
+    name: 'offerDetail',
     data () {
       return {
         loading: false,

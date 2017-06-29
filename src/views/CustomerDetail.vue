@@ -31,6 +31,7 @@
   import selectCity from '@/components/selectCity'
   import {customer, customerEdit, customerDel} from '../config'
   export default {
+    name: 'customerDetail',
     components: {
       dateFormat,
       Group,

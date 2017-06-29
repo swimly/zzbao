@@ -27,6 +27,7 @@
   import { Group, Cell, XInput, XButton, XTextarea, Datetime } from 'vux'
   import selectCity from '@/components/SelectCity'
   export default {
+    name: 'customerAdd',
     components: {
       Group,
       Cell,
