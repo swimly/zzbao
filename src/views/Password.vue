@@ -93,7 +93,6 @@
 .weui-btn.code .weui-loading{position:absolute;left:0.5rem;top:50%;margin-top:-10px !important;}
 .weui-btn.code.weui-btn_loading{padding-left:2rem !important;}
 .code .weui-cell{padding-right:7rem !important;}
-.code .weui-cells{background:none !important}
 </style>
 <style scoped>
 .iconfont{padding:0 0.5rem 0 0;}

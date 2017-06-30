@@ -4,7 +4,7 @@
       <div class="cover w">
         <img style="height:25vh" class="w" v-lazy="{src: company.banner, error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt=""/>
       </div>
-      <selectCity title="投保城市" value="value"></selectCity>
+      <selectCity title="投保城市" value="请选择投保城市"></selectCity>
       <group gutter="0">
         <x-input title="车牌号码" placeholder="请填写车牌号" placeholder-align="right" text-align="right" v-model="orderUser.license" required ref="license"></x-input>
       </group>

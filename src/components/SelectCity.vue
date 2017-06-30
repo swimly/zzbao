@@ -104,6 +104,11 @@ export default {
       if (index < 2) {
         this.index = this.active = index + 1
       } else {
+        let id = []
+        this.tab.forEach(el => {
+          id.push(el.id)
+        })
+        this.setAreaId(JSON.stringify(id))
         this.index = this.active = index
         let area = ''
         this.tab.forEach(el => {
@@ -160,7 +165,7 @@ export default {
       }]
     },
     ...mapMutations({
-      getArea: 'getInsuranceArea'
+      setAreaId: 'getInsuranceArea'
     })
   },
   created () {

@@ -3,22 +3,22 @@
     <header class="row w cus-head">
       <span class="col v-m t-c iconfont icon-back"></span>
       <h2 class="col v-m t-c cus-tit">添加客户</h2>
-      <a href="#" class="col v-m t-c cus-edit" @click="submit">完成</a>
+      <span class="col v-m t-c cus-edit" @click="submit">完成</span>
     </header>
       <group gutter="0">
-        <x-input title="姓名" placeholder="请输入真实姓名" placeholder-align="right" text-align="right">
+        <x-input title="姓名" placeholder="请输入真实姓名" placeholder-align="right" text-align="right" v-model="form.customer.name">
           <span class="iconfont icon-tongxunlu" slot="right" style="font-size:1.6rem;vertical-align:middle;color:#76CD62;"></span>
         </x-input>
-        <x-input title="电话" placeholder="请输入真实手机号" placeholder-align="right" text-align="right">
+        <x-input title="电话" placeholder="请输入真实手机号" placeholder-align="right" text-align="right" v-model="form.customer.phone">
         </x-input>
       </group>
       <group gutter="10px">
-        <!--<selectCity title="城市" :value="form.customer.areaFullName"></selectCity>-->
-        <x-input title="车牌号" placeholder="请输入车牌号" placeholder-align="right" text-align="right"></x-input>
-        <x-input title="车辆识别代号" placeholder="请输入车辆识别代号" placeholder-align="right" text-align="right"></x-input>
-        <x-input title="发动机号" placeholder="请输入发动机号" placeholder-align="right" text-align="right"></x-input>
-        <datetime title="注册登记日期" confirm-text="确认" cancel-text="取消"></datetime>
-        <datetime title="保险到期日期" confirm-text="确认" cancel-text="取消"></datetime>
+        <selectCity title="城市" :value="form.customer.areaFullName"></selectCity>
+        <x-input title="车牌号" placeholder="请输入车牌号" placeholder-align="right" text-align="right" v-model="form.customer.carNo"></x-input>
+        <x-input title="车辆识别代号" placeholder="请输入车辆识别代号" placeholder-align="right" text-align="right" v-model="form.customer.vin"></x-input>
+        <x-input title="发动机号" placeholder="请输入发动机号" placeholder-align="right" text-align="right" v-model="form.customer.engine"></x-input>
+        <datetime title="注册登记日期" confirm-text="确认" cancel-text="取消" v-model="form.customer.registTime"></datetime>
+        <datetime title="保险到期日期" confirm-text="确认" cancel-text="取消" v-model="form.customer.expireTime"></datetime>
         <x-textarea title="备注" text-align="right" v-model="form.customer.note"></x-textarea>
       </group>
   </div>
@@ -26,6 +26,7 @@
 <script>
   import { Group, Cell, XInput, XButton, XTextarea, Datetime } from 'vux'
   import selectCity from '@/components/SelectCity'
+  import {mapGetters} from 'vuex'
   export default {
     name: 'customerAdd',
     components: {
@@ -62,8 +63,14 @@
     created () {
       this.form.userId = this.$route.params.userId
     },
+    computed: {
+      ...mapGetters({
+        areaId: 'getInsuranceArea'
+      })
+    },
     methods: {
       submit () {
+        this.form.customer.areaId = this.areaId
         this.form.customer = JSON.stringify(this.form.customer)
         console.log(this.form)
         this.$http({
@@ -74,7 +81,15 @@
           jsonpCallback: 'json'
         })
         .then(res => {
-          console.log(res)
+          if (res.body.status) {
+            this.$vux.toast.show({
+              type: 'text',
+              width: '15em',
+              position: 'bottom',
+              text: '客户添加成功！',
+              time: '3000'
+            })
+          }
         })
       }
     }

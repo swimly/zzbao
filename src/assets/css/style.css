@@ -76,7 +76,7 @@ img{border:none;vertical-align: top;}
 .devision .item:first-child{border:none;}
 .login .devision .item{padding:0 2rem;font-size:1rem;}
 /*忘记密码*/
-.tips{font-size:1rem;background:#FFFBD3;color:#F8B918;border:1px solid #F7D168;border-radius:0.1rem;padding:1rem 0.3rem;margin-bottom:1rem;}
+.tips{font-size:1rem;background:#FFFBD3;color:#F8B918;border:1px solid #F7D168;border-radius:0.1rem;padding:0.6rem 0.3rem;margin-bottom:1rem;}
 .tips .iconfont{width:3rem;text-align:center;font-size:2rem;}
 .tips.icon{padding:0.5rem 0.3rem;}
 /*积分商城*/

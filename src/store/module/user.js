@@ -73,14 +73,17 @@ const mutations = {
         .then(res => {
           console.log(res)
           This.loading = false
-          This.$vux.toast.show({
-            type: 'text',
-            width: '15em',
-            position: 'bottom',
-            text: res.body.msg,
-            time: '1000'
-          })
-          This.$router.replace('/login')
+          if (res.body.status) {
+            This.$router.replace('/login')
+          } else {
+            This.$vux.toast.show({
+              type: 'text',
+              width: '15em',
+              position: 'bottom',
+              text: res.body.msg,
+              time: '1000'
+            })
+          }
         })
       }
     }
@@ -226,21 +229,18 @@ const mutations = {
         .then(res => {
           console.log(res)
           This.loading = false
-          if (res) {
+          if (res.body.status) {
             This.$vux.toast.show({
               type: 'text',
-              width: '10em',
+              width: '20em',
               position: 'bottom',
-              text: res.body.msg,
+              text: '恭喜，注册成功！',
               time: '1000'
             })
             state.logined = true
             state.userInfo = res.body.data.userInfo
-            This.$localStorage.set('userInfo', JSON.stringify(state.userInfo))
-            This.$localStorage.set('time', Date.parse(new Date()))
-            This.$localStorage.set('logined', true)
             setTimeout(() => {
-              This.$router.replace('/')
+              This.$router.replace('/login')
             }, 1000)
           }
         })
