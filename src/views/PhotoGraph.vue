@@ -16,7 +16,7 @@
         </div>
         <div class="take-photo">
           <img v-if="form.idCard" v-lazy="form.idCard" alt="">
-          <img v-if="!form.idCard" v-lazy="{src: 'static/img/sfz.jpg', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
+          <img style="width:80%;" v-if="!form.idCard" v-lazy="{src: 'static/img/sfz.jpg', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
           <span class="iconfont icon-add" @click="saveData(1)">
             <input name="idCard" type="file" @change="handleFileChange1" capture="camera" accept='image/*'>
           </span>
@@ -37,7 +37,7 @@
         </div>
         <div class="take-photo">
           <img v-if="form.drivingLicense" v-lazy="form.drivingLicense" alt="">
-          <img v-if="!form.drivingLicense" v-lazy="{src: 'static/img/jszf.jpg', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
+          <img style="width:80%;" v-if="!form.drivingLicense" v-lazy="{src: 'static/img/jszf.jpg', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
           <span class="iconfont icon-add" @click="saveData(2)">
             <input name="drivingLicense" type="file" @change="handleFileChange1" capture="camera" accept='image/*'>
           </span>
@@ -53,7 +53,7 @@
         </div>
         <div class="take-photo">
           <img v-if="form.subDrivingLicense" v-lazy="form.subDrivingLicense" alt="">
-          <img v-if="!form.subDrivingLicense" v-lazy="{src: 'static/img/jsz.jpg', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
+          <img style="width:80%;" v-if="!form.subDrivingLicense" v-lazy="{src: 'static/img/jsz.jpg', error: 'static/img/err1.png', loading: 'static/img/loading3.gif'}" alt="">
           <span class="iconfont icon-add" @click="saveData(3)">
             <input name="subDrivingLicense" type="file" @change="handleFileChange1" capture="camera" accept='image/*'>
           </span>

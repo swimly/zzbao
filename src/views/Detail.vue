@@ -28,7 +28,7 @@
 </template>
 <script>
   import {Scroller, Group, Cell, dateFormat} from 'vux'
-  import {detail} from '../config'
+  import {detail, wallet} from '../config'
   import VScroll from '../components/VScroll'
   export default {
     name: 'detail',
@@ -56,8 +56,7 @@
       }
     },
     mounted () {
-      this.balance = this.$localStorage.get('balance')
-      this.form.userId = this.$route.params.userId || JSON.parse(this.$localStorage.get('userInfo')).userId
+      this.form.userId = this.$route.params.userId
       if (this.form.userId === 'null') {
         this.$router.replace('/login')
       } else {
@@ -99,6 +98,19 @@
           for (const i in this.list) {
             this.list[i].createTime = dateFormat(this.list[i].createTime)
           }
+          this.$http({
+            method: 'jsonp',
+            url: wallet,
+            jsonp: 'callback',
+            jsonpCallback: 'json',
+            params: {
+              userId: this.form.userId
+            }
+          })
+          .then(res => {
+            console.log(res)
+            this.balance = res.body.data.wallet.balance
+          })
         })
       }
     }

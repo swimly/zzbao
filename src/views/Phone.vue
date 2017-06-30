@@ -18,7 +18,7 @@
         </x-input>
       </group>
       <group gutter="10px">
-        <x-button type="warn" :show-loading="loading" @click.native="handleRegister">确认修改</x-button>
+        <x-button type="warn" :show-loading="loading" @click.native="handleSubmit">确认修改</x-button>
       </group>
     </div>
   </div>
@@ -26,7 +26,7 @@
 <script>
   import {Group, Cell, XInput, XButton, Countdown} from 'vux'
   import {mapMutations} from 'vuex'
-  import {time} from '../config'
+  import {time, phone} from '../config'
   export default {
     name: 'phone',
     data () {
@@ -73,7 +73,27 @@
       handleSendSms () {
         this.postSMS(this)
       },
-      handleRegister () {
+      handleSubmit () {
+        this.$vux.toast.show({
+          type: 'text',
+          width: '20em',
+          position: 'bottom',
+          text: '功能正在开发中，请耐心等待！',
+          time: '1000'
+        })
+        console.log(phone)
+        // this.$http({
+        //   method: 'jsonp',
+        //   url: phone,
+        //   jsonp: 'callback',
+        //   jsonpCallback: 'json',
+        //   params: this.form,
+        //   before: () => {
+        //     if (status) {
+        //       this.list = []
+        //     }
+        //   }
+        // })
       },
       ...mapMutations({
         postSMS: 'postSMS'

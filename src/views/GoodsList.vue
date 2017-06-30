@@ -12,7 +12,7 @@
           <li class="col col-12" v-for="(item, index) in list" :key="index">
             <router-link :to="'/goods/' + item.id" class="goods" @click.native="handleSaveData(item)">
               <span class="cover">
-                <img class="w h" v-lazy="{src: item.cover, error: 'static/img/err1.png', loading: 'static/img/loading1.gif'}"/>
+                <img class="w h" v-lazy="{src: item.listPic, error: 'static/img/err1.png', loading: 'static/img/loading1.gif'}"/>
               </span>
               <b class="name">{{item.name}}</b>
               <span class="c-red">积分<b class="score">{{item.score}}</b></span>
@@ -59,6 +59,7 @@
         typeId: 0,
         showLoading: false,
         select: false,
+        score: false,
         bar: [{
           text: '全部',
           key: 'all'

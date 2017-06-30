@@ -2,13 +2,13 @@
   <div class="page gray fix-blur">
     <blur :blur-amount=20 :url="selectBlur()" class="head-bar">
       <ul class="row w h" style="position:relative;z-index:1;">
-        <li class="col v-b col-16">
+        <li class="col v-b col-18">
           <img v-lazy="userInfo.userSex > 1 ? 'static/img/female.png' : 'static/img/male.png'" alt="" class="circle v-m" v-if="userInfo">
           <img v-lazy="'static/img/face.png'" alt="" class="circle v-m" v-if="!userInfo">
-          <span class="v-m" v-if="userInfo">{{userInfo.userName}}</span>
+          <span style="display:inline-block;width:5em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" class="v-m" v-if="userInfo">{{userInfo.userName}}</span>
           <router-link to="/login" v-if="!userInfo">登录/注册</router-link>
         </li>
-        <li class="col v-t t-r col-8">
+        <li class="col v-t t-r col-6">
           <p>
             <router-link to="/setting" class="iconfont icon-shezhi v-m"></router-link>
             <router-link to="/message" class="iconfont icon-xiaoxi v-m" style="margin-left:0.5rem;"></router-link>
@@ -28,7 +28,7 @@
         </router-link>
       </div>
     </div>
-    <div class="h auto view" style="padding-top:40px;">
+    <div class="h auto view" style="padding-top:4rem;">
       <group class="mt-5 mb-5" title="订单管理">
         <div class="row w order">
           <router-link :to="'/order/3/' + userId" class="col v-m col-8">

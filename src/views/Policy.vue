@@ -1,9 +1,9 @@
 <template>
   <div class="page gray auto">
-    <group gutter="0px">
+    <group gutter="0px" v-if="order.user">
       <cell>
         <p slot="title">保单城市：</p>
-        <p slot="default"></p>
+        <p slot="default">{{order.user.insuranceArea}}</p>
       </cell>
     </group>
     <group gutter="10px">
@@ -35,7 +35,7 @@
     },
     data () {
       return {
-        order: JSON.parse(this.$localStorage.get('orderDetail')),
+        order: {},
         force: [],
         insurance: [],
         regard: [],
@@ -61,6 +61,7 @@
         })
         .then(res => {
           console.log(res)
+          this.order = res.body.data.order
           // this.order = res.body.data.order
           // this.$localStorage.set('order', JSON.stringify(this.order))
           const insurances = res.body.data.order.insurance

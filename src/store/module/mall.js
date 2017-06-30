@@ -34,6 +34,7 @@ const mutations = {
         }
       })
       .then(res => {
+        console.log(res)
         This.list = res.body.data.productList
         This.showLoading = false
         This.$http({
@@ -58,19 +59,21 @@ const mutations = {
           })
           .then(res => {
             This.advert = res.body.data.aderList
-            This.$http({
-              method: 'jsonp',
-              url: wallet,
-              jsonp: 'callback',
-              jsonpCallback: 'json',
-              params: {
-                userId: JSON.parse(This.$localStorage.get('userInfo')).userId
-              }
-            })
-            .then(res => {
-              console.log(res)
-              This.score = res.body.data.wallet.balance
-            })
+            if (!This.score) {
+              This.$http({
+                method: 'jsonp',
+                url: wallet,
+                jsonp: 'callback',
+                jsonpCallback: 'json',
+                params: {
+                  userId: JSON.parse(This.$localStorage.get('userInfo')).userId
+                }
+              })
+              .then(res => {
+                console.log(res)
+                This.score = res.body.data.wallet.balance
+              })
+            }
           })
         })
       })

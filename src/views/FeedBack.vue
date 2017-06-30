@@ -2,10 +2,10 @@
   <div class="page gray row w feedback">
     <div class="col v-t t-l p-1" style="padding-top:0;">
       <group title="反馈意见">
-        <x-textarea v-model="form.content"></x-textarea>
+        <x-textarea v-model="form.content" placeholder="请填写反馈意见！"></x-textarea>
       </group>
       <group title="联系方式">
-        <x-input is-type="china-mobile" v-model="form.phone"></x-input>
+        <x-input is-type="china-mobile" v-model="form.phone" placeholder="请填写联系方式！"></x-input>
       </group>
       <x-button type="warn" style="margin-top:2rem;" :show-loading="loading" @click.native="handleSubmit">提交</x-button>
     </div>

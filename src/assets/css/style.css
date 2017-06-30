@@ -55,7 +55,7 @@ img{border:none;vertical-align: top;}
 .form select{border:1px solid #E6E6E6;font-size:1rem;padding:0.6rem 1rem;border-radius:0.2rem;}
 .checkbox{font-size:0;display:inline-block;vertical-align: middle;}
 .checkbox input[type=checkbox],.checkbox input[type=radio]{width:2rem;height:2rem;margin:0;vertical-align: middle;position:relative;z-index:2;opacity:0;}
-.checkbox .iconfont{display:inline-block;vertical-align: middle;width:2rem;height:2rem;line-height:2rem;text-align:center;border:2px solid #DADADA;background:#fff;color:#fff;margin-left:-2rem;position:relative;z-index:1;font-size:1.4rem;margin-right:0 !important;}
+.checkbox .iconfont{display:inline-block;vertical-align: middle;width:2rem;height:2rem;line-height:2rem;text-align:center;border:2px solid #DADADA;background:#fff;color:#fff;margin-left:-2rem;position:relative;z-index:1;font-size:1.4rem;margin-right:0 !important;padding:0;}
 .checkbox input:checked + .iconfont{color:#30AD1B;}
 .checkbox label{font-size:1rem;vertical-align: middle;padding:0 0.5rem;color:#494848;}
 .checkbox label a{color:#EB3D00;text-decoration:underline;}
@@ -149,7 +149,7 @@ img{border:none;vertical-align: top;}
 .page.has-btn{padding-bottom:5rem;}
 .btn-area{height:5rem;border-top:1px solid #E8E8E8;}
 .btn-area .col{padding:0 1rem;}
-.take-photo{padding:1rem 4rem;position:relative;}
+.take-photo{position:relative;padding:1rem 0;text-align:center;}
 .take-photo img{width:100%;}
 .take-photo .iconfont{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:4rem;color:#43B5E4;display:inline-block;}
 /*选择保障*/

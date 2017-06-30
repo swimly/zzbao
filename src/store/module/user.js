@@ -238,7 +238,6 @@ const mutations = {
               time: '1000'
             })
             state.logined = true
-            state.userInfo = res.body.data.userInfo
             setTimeout(() => {
               This.$router.replace('/login')
             }, 1000)

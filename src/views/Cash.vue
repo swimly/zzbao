@@ -109,7 +109,7 @@
             type: 'text',
             width: '20em',
             position: 'bottom',
-            text: '提现金额必须大于0',
+            text: '提现金额有误!',
             time: '1000'
           })
         } else {

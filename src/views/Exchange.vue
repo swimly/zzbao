@@ -1,6 +1,6 @@
 <template>
   <div class="page gray h">
-    <v-scroll :on-refresh="onRefresh" :on-infinite="onInfinite" v-if="list.length > 0">
+    <div v-if="list.length > 0">
        <ul class="safe-list white">
         <li class="row w"  v-for="(item, index) in list" :key="index">
           <span class="col v-m col-9 t-l p-5">
@@ -17,7 +17,7 @@
           </span>
         </li>
       </ul>
-    </v-scroll>
+    </div>
     <div class="row w h tip" v-if="list.length === 0">
       <div class="col v-m t-c">
         <img v-lazy="'static/img/sorry.png'" alt="">
@@ -44,7 +44,7 @@
         loading: false,
         form: {
           userId: 0,
-          limit: 5,
+          limit: 20,
           pageIndex: 0
         },
         list: [], // 下拉更新数据存放数组
@@ -84,18 +84,31 @@
             This.list.push(el)
           })
           if (res.body.data.productList.length < This.form.limit) {
-            This.statusNoMore()
+            console.log('这是最后一页')
+            this.statusNoMore()
+          } else {
+            this.statusLoad()
           }
           done()
         })
       },
       onRefresh (done) {
         this.form.pageIndex = 0
+        this.statusInit()
         this.getList(done, 1)
       },
       onInfinite (done) {
-        this.form.pageIndex ++
-        this.getList(done, 0)
+        // this.form.pageIndex ++
+        // this.getList(done, 0)
+        this.form.pageIndex = this.list.length / this.form.limit
+        if (this.list.length % this.form.limit) {
+          this.statusNoMore()
+        } else {
+          this.$el.querySelectorAll('.load').forEach(el => {
+            el.style.display = 'block'
+          })
+          this.getList(done, 0)
+        }
       },
       statusNoMore () {
         console.log(this.$el.querySelectorAll('.load'))
