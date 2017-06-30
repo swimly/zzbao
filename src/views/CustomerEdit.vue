@@ -69,6 +69,7 @@
   import selectCity from '@/components/SelectCity'
   import { dateFormat } from 'vux'
   export default {
+    name: 'customerEdit',
     components: {
       dateFormat,
       selectCity

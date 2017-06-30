@@ -39,6 +39,7 @@
   import {mapMutations} from 'vuex'
   import Loading from '@/components/Loading'
   export default {
+    name: 'goodsList',
     computed: {
       type () {
         return this.$route.params.type

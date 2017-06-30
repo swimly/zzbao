@@ -16,6 +16,7 @@
 <script>
   import {Timeline, TimelineItem} from 'vux'
   export default {
+    name: 'track',
     components: {
       Timeline,
       TimelineItem

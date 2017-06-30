@@ -26,6 +26,7 @@
 
 <script>
 export default {
+  name: 'vscroll',
   props: {
     offset: {
       type: Number,

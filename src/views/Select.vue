@@ -61,6 +61,7 @@
   // import {insurance} from '../config'
   import {submitOrder, insurance} from '../config'
   export default {
+    name: 'select',
     data () {
       return {
         force: [],

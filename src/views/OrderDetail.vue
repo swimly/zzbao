@@ -55,6 +55,7 @@
   import {Group, Cell, XButton, Flexbox, FlexboxItem, Divider} from 'vux'
   import {orderDetail, backOrder} from '../config'
   export default {
+    name: 'orderDetail',
     components: {
       Group,
       Cell,

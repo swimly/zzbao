@@ -9,7 +9,6 @@
       <group gutter="0">
         <x-input :readonly="!edit" title="姓名" text-align="right" v-model="form.customer.name"></x-input>
         <x-input :readonly="!edit" title="电话" text-align="right" v-model="form.customer.phone"></x-input>
-        <selectCity title="城市" :value="form.customer.areaFullName" :readonly="!edit"></selectCity>
         <x-input :readonly="!edit" title="车牌号" text-align="right" v-model="form.customer.carNo"></x-input>
         <x-input :readonly="!edit" title="车辆识别代号" text-align="right" v-model="form.customer.vin"></x-input>
         <x-input :readonly="!edit" title="发动机号" text-align="right" v-model="form.customer.engine"></x-input>
@@ -28,7 +27,6 @@
 </template>
 <script>
   import { dateFormat, Group, Cell, XInput, XButton, XTextarea } from 'vux'
-  import selectCity from '@/components/selectCity'
   import {customer, customerEdit, customerDel} from '../config'
   export default {
     name: 'customerDetail',
@@ -38,8 +36,7 @@
       Cell,
       XInput,
       XButton,
-      XTextarea,
-      selectCity
+      XTextarea
     },
     data () {
       return {

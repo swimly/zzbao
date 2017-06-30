@@ -22,6 +22,7 @@
   import {Group, Cell, CellFormPreview} from 'vux'
   import {orderDetail} from '../config'
   export default {
+    name: 'policy',
     head: {
       title: {
         inner: '保单信息'

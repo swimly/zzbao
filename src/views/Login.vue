@@ -32,6 +32,7 @@
   import {mapGetters, mapMutations} from 'vuex'
   import {XButton, Group, Cell, XInput} from 'vux'
   export default {
+    name: 'login',
     head: {
       title: {
         inner: '用户登录'

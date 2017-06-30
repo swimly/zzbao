@@ -30,6 +30,7 @@
   import {Group, Cell, XButton} from 'vux'
   import {orderDetail} from '../config'
   export default {
+    name: 'offerSuccess',
     components: {
       Group,
       Cell,

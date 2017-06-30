@@ -29,6 +29,7 @@
   import {detail} from '../config'
   import VScroll from '../components/VScroll'
   export default {
+    name: 'balanceDetail',
     head: {
       title: {
         inner: '积分余额'

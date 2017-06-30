@@ -35,6 +35,7 @@
   import {time, resetPayPwd} from '../config'
   import {mapMutations} from 'vuex'
   export default {
+    name: 'passwordPay',
     head: {
       title: {
         inner: '修改支付密码'

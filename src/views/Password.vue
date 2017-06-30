@@ -40,6 +40,7 @@
   import {time} from '../config'
   import {mapMutations} from 'vuex'
   export default {
+    name: 'password',
     components: {
       Group,
       XInput,

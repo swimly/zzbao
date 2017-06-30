@@ -34,9 +34,8 @@
             <span slot="label" class="label">手机号码</span>
           </x-input>
         </group>
-        <group gutter="10px" class="bor">
-          <x-address title="地址" :list="address" required v-model="place" raw-value>
-          </x-address>
+        <group gutter="10px">
+          <city title="地址" class="bor address"></city>
         </group>
         <group gutter="10px" class="bor">
           <x-input type="tel" label-width="5rem" style="text-align:right" placeholder="请输入街道等详细信息" required v-model="form.address">
@@ -74,8 +73,10 @@
 </template>
 <script>
   import {Group, XImg, XButton, XDialog, XInput, XAddress, ChinaAddressV3Data, Icon, Toast} from 'vux'
+  import city from '@/components/SelectCity'
   import {exchange} from '../config'
   export default {
+    name: 'goods',
     components: {
       Group,
       XImg,
@@ -85,7 +86,8 @@
       XAddress,
       ChinaAddressV3Data,
       Icon,
-      Toast
+      Toast,
+      city
     },
     data () {
       return {
@@ -169,7 +171,7 @@
   .sub-title{font-size:1.4rem;color:#333;}
   .text{font-size:1rem;color:#666;text-indent:2em;line-height:1.8;}
   .text img{width:100%;}
-  .label{display:inline-block;width:5rem;padding-right:0.5rem;text-align:left;font-size:1rem;color:#666;}
+  /*.label{display:inline-block;width:5rem;padding-right:0.5rem;text-align:left;font-size:1rem;color:#666;}*/
   .do .col{padding:1rem 0.5rem;}
   .form-wrap h2{font-size:1.4rem;color:#666;}
   .msg p{color:#999;font-size:1rem;}
@@ -178,6 +180,8 @@
 <style>
 .bor .weui-cells{border:1px solid #EBEBEB;border-top:none;border-bottom:0;background:#F9F9F9;border-radius:0.5rem;font-size:1rem;}
 .bor .weui-cell__hd{width:5rem;text-align:left;color:#666;}
+.address .weui-cell__hd{width:0;}
+.address .vux-cell-bd{text-align:left;}
 .vux-popup-dialog{z-index:5001 !important;}
 .dialog-tip .weui-icon{font-size:3rem;}
 .text img{width:100%;}

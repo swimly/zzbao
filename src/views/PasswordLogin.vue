@@ -24,6 +24,7 @@
   import {Group, XInput, XButton} from 'vux'
   import {editLoginPwd} from '../config'
   export default {
+    name: 'passwordLogin',
     head: {
       title: {
         inner: '修改登录密码'

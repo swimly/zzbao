@@ -33,6 +33,7 @@ import {mapMutations} from 'vuex'
 import {Group, Popup, Tab, TabItem, XButton, Swiper, Cell, SwiperItem, TransferDom, XSwitch} from 'vux'
 import {area} from '../config'
 export default {
+  name: 'city',
   data () {
     return {
       tab: [{

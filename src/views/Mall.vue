@@ -32,7 +32,7 @@
     </swiper>
     <h2 class="title">新品推荐</h2>
     <ul class="grid goods-list">
-      <li class="col col-12" v-for="(item, index) in list">
+      <li class="col col-12" v-for="(item, index) in list" :key="index">
         <router-link :to="'/goods/' + item.id" class="goods" @click.native="handleSaveData(item)">
           <span class="cover">
             <img v-lazy="{src: item.listPic, error: 'static/img/err1.png', loading: 'static/img/loading1.gif'}"/>
@@ -49,6 +49,7 @@
   import {mapGetters, mapMutations} from 'vuex'
   import {adver} from '../config'
   export default {
+    name: 'mall',
     head: {
       title: {
         inner: '积分商城'

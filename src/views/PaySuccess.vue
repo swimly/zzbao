@@ -23,6 +23,7 @@
 <script>
   import {Group, Cell, XButton} from 'vux'
   export default {
+    name: 'paySuccess',
     components: {
       Group,
       Cell,

@@ -27,6 +27,7 @@
   import {XInput, Group, Cell, XButton} from 'vux'
   import {precard, withdraw} from '../config'
   export default {
+    name: 'cash',
     head: {
       title: {
         inner: '提现'

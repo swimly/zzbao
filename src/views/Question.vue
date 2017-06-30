@@ -13,6 +13,7 @@
   import {question} from '../config'
   import Collapse from 'vue-collapse'
   export default {
+    name: 'question',
     head: {
       title: {
         inner: '常见问题'

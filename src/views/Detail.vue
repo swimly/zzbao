@@ -31,6 +31,7 @@
   import {detail} from '../config'
   import VScroll from '../components/VScroll'
   export default {
+    name: 'detail',
     head: {
       title: {
         inner: '累计积分'

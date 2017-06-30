@@ -29,6 +29,7 @@
   import {Group, Cell, XInput, XButton, Scroller} from 'vux'
   import {donation} from '../config'
   export default {
+    name: 'donation',
     head: {
       title: {
         inner: '积分转赠'

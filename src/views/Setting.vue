@@ -17,6 +17,7 @@
 <script>
   import {Group, Cell} from 'vux'
   export default {
+    name: 'setting',
     head: {
       title: {
         inner: '设置'

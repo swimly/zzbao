@@ -13,6 +13,7 @@
   import {Group, Cell, Badge, dateFormat} from 'vux'
   import {message, messageStatus} from '../config'
   export default {
+    name: 'message',
     components: {
       Group,
       Cell,

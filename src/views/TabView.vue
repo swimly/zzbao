@@ -8,7 +8,7 @@
           <img slot="icon-active" src="static/img/nav1-active.png"/>
           <span slot="label">车险报价</span>
         </tabbar-item>
-        <tabbar-item :selected="page === 'mall'" show-dot link="/mall">
+        <tabbar-item :selected="page === 'mall'" link="/mall">
           <img slot="icon" src="static/img/nav2.png"/>
           <img slot="icon-active" src="static/img/nav2-active.png"/>
           <span slot="label">积分商城</span>
@@ -25,6 +25,7 @@
 <script>
 import {Tabbar, TabbarItem, Group, Cell} from 'vux'
 export default {
+  name: 'tabView',
   data () {
     return {
       page: 'offer'

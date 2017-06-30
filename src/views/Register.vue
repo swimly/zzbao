@@ -43,6 +43,7 @@
   import {mapMutations} from 'vuex'
   import {time} from '../config'
   export default {
+    name: 'register',
     data () {
       return {
         isReg: false,

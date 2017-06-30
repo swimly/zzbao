@@ -20,6 +20,7 @@
   import {orderList} from '../config'
   import VScroll from '../components/VScroll'
   export default {
+    name: 'order',
     head: {
       title: {
         inner: '我的订单'

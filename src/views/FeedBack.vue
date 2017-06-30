@@ -15,6 +15,7 @@
   import {Group, Cell, XInput, XTextarea, XButton} from 'vux'
   import {feedback} from '../config'
   export default {
+    name: 'feedback',
     head: {
       title: {
         inner: '意见反馈'

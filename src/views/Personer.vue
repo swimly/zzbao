@@ -71,6 +71,7 @@
   import {mapGetters, mapMutations} from 'vuex'
   import {wallet} from '../config'
   export default {
+    name: 'personer',
     head: {
       title: {
         inner: '个人中心'

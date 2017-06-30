@@ -21,6 +21,7 @@
   import {withdrawlog} from '../config'
   import VScroll from '../components/VScroll'
   export default {
+    name: 'record',
     head: {
       title: {
         inner: '提现记录'

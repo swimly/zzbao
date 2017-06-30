@@ -12,6 +12,7 @@
 </template>
 <script>
   export default {
+    name: 'scoreItem',
     props: {
       data: {
         type: Object,

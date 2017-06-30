@@ -20,6 +20,7 @@
 <script>
   import {Cell} from 'vux'
   export default {
+    name: 'selectItem',
     components: {
       Cell
     },

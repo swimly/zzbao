@@ -25,6 +25,7 @@
 <script>
   import {Group, Cell, XButton, Radio} from 'vux'
   export default {
+    name: 'pay',
     head: {
       title: {
         inner: '支付'

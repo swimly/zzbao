@@ -13,7 +13,7 @@
         </x-input>
       </group>
       <group gutter="10px">
-        <selectCity title="城市" :value="form.customer.areaFullName"></selectCity>
+        <!--<selectCity title="城市" :value="form.customer.areaFullName"></selectCity>-->
         <x-input title="车牌号" placeholder="请输入车牌号" placeholder-align="right" text-align="right"></x-input>
         <x-input title="车辆识别代号" placeholder="请输入车辆识别代号" placeholder-align="right" text-align="right"></x-input>
         <x-input title="发动机号" placeholder="请输入发动机号" placeholder-align="right" text-align="right"></x-input>

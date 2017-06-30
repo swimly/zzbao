@@ -44,6 +44,7 @@
   import {XInput, Group, Datetime, XButton, Cell, dateFormat} from 'vux'
   import {mapMutations} from 'vuex'
   export default {
+    name: 'information',
     head: {
       title: {
         inner: '我的资料'

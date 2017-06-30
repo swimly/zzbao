@@ -18,6 +18,7 @@
 <script>
   import {Group, Cell} from 'vux'
   export default {
+    name: 'recordDetail',
     head: {
       title: {
         inner: '提现记录详情'

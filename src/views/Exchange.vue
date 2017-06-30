@@ -32,6 +32,7 @@
   import {exchangeLog} from '../config'
   import VScroll from '../components/VScroll'
   export default {
+    name: 'exchange',
     head: {
       title: {
         inner: '兑换记录'

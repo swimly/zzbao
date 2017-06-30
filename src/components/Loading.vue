@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show" class="loading">
+  <div v-show="show" class="loading">
     <slot name="icon"></slot> 
     <slot name="text">
       <p>正在加载中……</p>
@@ -8,6 +8,7 @@
 </template>
 <script>
   export default {
+    name: 'loading',
     props: {
       show: {
         type: Boolean,

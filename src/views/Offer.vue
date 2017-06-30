@@ -22,6 +22,7 @@ import {XImg, Loading} from 'vux'
 import VScroll from '../components/VScroll'
 import {company} from '../config'
 export default {
+  name: 'offer',
   head: {
     title: {
       inner: '车险报价'

@@ -47,6 +47,7 @@
   import {wallet} from '../config'
   import {mapGetters} from 'vuex'
   export default {
+    name: 'wallet',
     head: {
       title: {
         inner: '我的钱包'

@@ -73,6 +73,7 @@
   import {XButton} from 'vux'
   import $ from 'jquery'
   export default {
+    name: 'photoGraph',
     head: {
       title: {
         inner: '拍照上传'
