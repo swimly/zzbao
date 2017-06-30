@@ -53,8 +53,8 @@
             expireTime: '',
             note: '',
             driverCard: '',
-            id: '',
             idCard: '',
+            areaId: '',
             subDriverCard: ''
           }
         }
@@ -72,7 +72,7 @@
       submit () {
         this.form.customer.areaId = this.areaId
         this.form.customer = JSON.stringify(this.form.customer)
-        console.log(this.form)
+        // console.log(this.form.customer)
         this.$http({
           method: 'jsonp',
           url: 'http://liuwbox.com/zzbao/app/customer/submit.htm',
@@ -81,6 +81,7 @@
           jsonpCallback: 'json'
         })
         .then(res => {
+          console.log(res)
           if (res.body.status) {
             this.$vux.toast.show({
               type: 'text',

@@ -75,6 +75,7 @@
   import {Group, XImg, XButton, XDialog, XInput, XAddress, ChinaAddressV3Data, Icon, Toast} from 'vux'
   import city from '@/components/SelectCity'
   import {exchange} from '../config'
+  import {mapGetters} from 'vuex'
   export default {
     name: 'goods',
     components: {
@@ -108,6 +109,11 @@
         }
       }
     },
+    computed: {
+      ...mapGetters({
+        area: 'getInsuranceArea'
+      })
+    },
     created () {
       this.id = this.$route.params.id
       // 获取商品详情
@@ -130,7 +136,8 @@
       handleSubmit () {
         this.form.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
         this.form.productId = this.$route.params.id
-        this.form.address = this.place + ',' + this.form.address
+        this.form.address = this.area + ',' + this.form.address
+        console.log(exchange, this.form)
         this.$http({
           method: 'jsonp',
           url: exchange,

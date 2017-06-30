@@ -1,7 +1,9 @@
 <template>
   <div>
     <group gutter="0">
-      <cell :title="title" is-link :value="selected" @click.native="handleOpen" class="address"></cell>
+      <cell :title="title" is-link @click.native="handleOpen" class="address">
+        <p><span v-if="!selected">{{value}}</span><span v-if="selected">{{selected}}</span></p>
+      </cell>
     </group>
     <div v-transfer-dom>
       <popup v-model="show" position="bottom" height="60%" class="bg-f select">
@@ -46,9 +48,10 @@ export default {
         text: '区',
         id: 0
       }],
-      selected: '请选择',
+      selected: '',
       areaId: [],
       show: false,
+      showName: '',
       index: 0,
       active: 0,
       areaList: []
@@ -95,7 +98,6 @@ export default {
       this.init()
     },
     handleSwiper (areaId, text, index) {
-      console.log(index, areaId, text)
       this.tab[index] = {
         id: areaId,
         text: text
@@ -104,11 +106,11 @@ export default {
       if (index < 2) {
         this.index = this.active = index + 1
       } else {
-        let id = []
-        this.tab.forEach(el => {
-          id.push(el.id)
-        })
-        this.setAreaId(JSON.stringify(id))
+        // let id = []
+        // this.tab.forEach(el => {
+        //   id.push(el.id)
+        // })
+        this.setAreaId(areaId)
         this.index = this.active = index
         let area = ''
         this.tab.forEach(el => {
@@ -169,9 +171,7 @@ export default {
     })
   },
   created () {
-    if (this.value) {
-      this.selected = this.value
-    }
+    this.showName = this.value
   }
 }
 </script>

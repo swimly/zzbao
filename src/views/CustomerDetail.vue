@@ -10,13 +10,14 @@
         <x-input :readonly="!edit" title="姓名" text-align="right" v-model="form.customer.name"></x-input>
         <x-input :readonly="!edit" title="电话" text-align="right" v-model="form.customer.phone"></x-input>
         <x-input :readonly="!edit" title="车牌号" text-align="right" v-model="form.customer.carNo"></x-input>
-        <city title="城市"></city>
+        <city :readonly="!edit" title="城市" :value="form.customer.areaFullName"></city>
         <x-input :readonly="!edit" title="车辆识别代号" text-align="right" v-model="form.customer.vin"></x-input>
         <x-input :readonly="!edit" title="发动机号" text-align="right" v-model="form.customer.engine"></x-input>
-        <x-input :readonly="!edit" title="注册登记日期" text-align="right" v-model="form.customer.registTime"></x-input>
-        <x-input :readonly="!edit" title="保险到期日期" text-align="right" v-model="form.customer.expireTime"></x-input>
+        <datetime :readonly="!edit" title="注册登记日期" text-align="right" v-model="form.customer.registTime" :display-format="formatValueFunction"></datetime>
+        <datetime :readonly="!edit" title="保险到期日期" text-align="right" v-model="form.customer.expireTime" :display-format="formatValueFunction"></datetime>
         <x-textarea :readonly="!edit" title="备注" text-align="right" v-model="form.customer.note"></x-textarea>
       </group>
+      {{area}}
     </section>
     <footer class="cus-footer row w">
       <div class="col v-m" style="padding:0 1rem;">
@@ -27,9 +28,10 @@
   </div>
 </template>
 <script>
-  import { dateFormat, Group, Cell, XInput, XButton, XTextarea } from 'vux'
+  import { dateFormat, Group, Cell, XInput, XButton, XTextarea, Datetime } from 'vux'
   import {customer, customerEdit, customerDel} from '../config'
   import city from '@/components/SelectCity'
+  import {mapGetters} from 'vuex'
   export default {
     name: 'customerDetail',
     components: {
@@ -39,7 +41,8 @@
       XInput,
       XButton,
       city,
-      XTextarea
+      XTextarea,
+      Datetime
     },
     data () {
       return {
@@ -51,10 +54,16 @@
           userId: this.$route.params.userId,
           customerId: this.$route.params.customerId,
           customer: {}
+        },
+        formatValueFunction (val) {
+          return val.substring(0, 10)
         }
       }
     },
     computed: {
+      ...mapGetters({
+        area: 'getInsuranceArea'
+      }),
       text () {
         if (this.edit) {
           return '完成'
@@ -98,7 +107,7 @@
       handleSave () {
         this.edit = !this.edit
         if (!this.edit) {
-          this.form.customer.areaId = 101100
+          this.form.customer.areaId = this.area
           this.form.customer = JSON.stringify(this.form.customer)
           this.handleEdit()
         }
@@ -112,6 +121,7 @@
           jsonpCallback: 'json'
         })
         .then(res => {
+          console.log(res)
           if (res.body.status) {
             this.form.customer = JSON.parse(this.form.customer)
             this.$vux.toast.show({
@@ -134,6 +144,8 @@
         })
         .then(res => {
           this.form.customer = res.body.data.customer
+          this.form.customer.registTime = dateFormat(this.form.customer.registTime)
+          this.form.customer.expireTime = dateFormat(this.form.customer.expireTime)
           console.log(res.body.data.customer)
         })
       },
