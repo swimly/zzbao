@@ -1,4 +1,4 @@
-import {product, productType, adver} from '../../config'
+import {product, productType, adver, wallet} from '../../config'
 const state = {
   mallNav: [],
   productList: []
@@ -58,7 +58,19 @@ const mutations = {
           })
           .then(res => {
             This.advert = res.body.data.aderList
-            console.log(This.advert)
+            This.$http({
+              method: 'jsonp',
+              url: wallet,
+              jsonp: 'callback',
+              jsonpCallback: 'json',
+              params: {
+                userId: JSON.parse(This.$localStorage.get('userInfo')).userId
+              }
+            })
+            .then(res => {
+              console.log(res)
+              This.score = res.body.data.wallet.balance
+            })
           })
         })
       })

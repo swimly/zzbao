@@ -84,7 +84,7 @@
             This.list.push(el)
           })
           if (res.body.data.productList.length < This.form.limit) {
-            // this.$el.querySelector('.load-more').innerHTML = '我是有底线的！'
+            This.statusNoMore()
           }
           done()
         })
@@ -96,29 +96,31 @@
       onInfinite (done) {
         this.form.pageIndex ++
         this.getList(done, 0)
-        // this.$http({
-        //   method: 'jsonp',
-        //   url: exchangeLog,
-        //   jsonp: 'callback',
-        //   jsonpCallback: 'json',
-        //   params: this.form,
-        //   before: () => {
-        //     this.loading = true
-        //   }
-        // })
-        // .then(res => {
-        //   console.log(res)
-        //   let vm = this
-        //   let arr = res.body.data.productList
-        //   arr.forEach(function (el) {
-        //     This.list.push(el)
-        //   })
-        //   if (arr.length < vm.form.limit) {
-        //     this.$el.querySelector('.load-more').innerHTML = '我是有底线的！'
-        //     return
-        //   }
-        //   done()
-        // })
+      },
+      statusNoMore () {
+        console.log(this.$el.querySelectorAll('.load'))
+        this.$el.querySelectorAll('.load').forEach(el => {
+          el.style.display = 'none'
+        })
+        this.$el.querySelectorAll('.no-more').forEach(el => {
+          el.style.display = 'block'
+        })
+      },
+      statusLoad () {
+        this.$el.querySelectorAll('.load').forEach(el => {
+          el.style.display = 'block'
+        })
+        this.$el.querySelectorAll('.no-more').forEach(el => {
+          el.style.display = 'none'
+        })
+      },
+      statusInit () {
+        this.$el.querySelectorAll('.load').forEach(el => {
+          el.style.display = 'none'
+        })
+        this.$el.querySelectorAll('.no-more').forEach(el => {
+          el.style.display = 'none'
+        })
       }
     }
   }

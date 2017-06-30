@@ -6,19 +6,19 @@
       <span class="col v-m t-c cus-edit" @click="submit">完成</span>
     </header>
       <group gutter="0">
-        <x-input title="姓名" placeholder="请输入真实姓名" placeholder-align="right" text-align="right" v-model="form.customer.name">
+        <x-input title="姓名" placeholder="请输入真实姓名" placeholder-align="right" text-align="right" v-model="form.customer.name" required ref="name">
           <span class="iconfont icon-tongxunlu" slot="right" style="font-size:1.6rem;vertical-align:middle;color:#76CD62;"></span>
         </x-input>
-        <x-input title="电话" placeholder="请输入真实手机号" placeholder-align="right" text-align="right" v-model="form.customer.phone">
+        <x-input title="电话" placeholder="请输入真实手机号" placeholder-align="right" text-align="right" v-model="form.customer.phone" required ref="phone">
         </x-input>
       </group>
       <group gutter="10px">
         <selectCity title="城市" :value="form.customer.areaFullName"></selectCity>
-        <x-input title="车牌号" placeholder="请输入车牌号" placeholder-align="right" text-align="right" v-model="form.customer.carNo"></x-input>
-        <x-input title="车辆识别代号" placeholder="请输入车辆识别代号" placeholder-align="right" text-align="right" v-model="form.customer.vin"></x-input>
-        <x-input title="发动机号" placeholder="请输入发动机号" placeholder-align="right" text-align="right" v-model="form.customer.engine"></x-input>
-        <datetime title="注册登记日期" confirm-text="确认" cancel-text="取消" v-model="form.customer.registTime"></datetime>
-        <datetime title="保险到期日期" confirm-text="确认" cancel-text="取消" v-model="form.customer.expireTime"></datetime>
+        <x-input title="车牌号" placeholder="请输入车牌号" placeholder-align="right" text-align="right" v-model="form.customer.carNo" required ref="carNo"></x-input>
+        <x-input title="车辆识别代号" placeholder="请输入车辆识别代号" placeholder-align="right" text-align="right" v-model="form.customer.vin" required ref="vin"></x-input>
+        <x-input title="发动机号" placeholder="请输入发动机号" placeholder-align="right" text-align="right" v-model="form.customer.engine" required ref="engine"></x-input>
+        <datetime title="注册登记日期" confirm-text="确认" cancel-text="取消" v-model="form.customer.registTime" required ref="regist"></datetime>
+        <datetime title="保险到期日期" confirm-text="确认" cancel-text="取消" v-model="form.customer.expireTime" required ref="expire"></datetime>
         <x-textarea title="备注" text-align="right" v-model="form.customer.note"></x-textarea>
       </group>
   </div>
@@ -70,28 +70,38 @@
     },
     methods: {
       submit () {
-        this.form.customer.areaId = this.areaId
-        this.form.customer = JSON.stringify(this.form.customer)
-        // console.log(this.form.customer)
-        this.$http({
-          method: 'jsonp',
-          url: 'http://liuwbox.com/zzbao/app/customer/submit.htm',
-          jsonp: 'callback',
-          params: this.form,
-          jsonpCallback: 'json'
-        })
-        .then(res => {
-          console.log(res)
-          if (res.body.status) {
-            this.$vux.toast.show({
-              type: 'text',
-              width: '15em',
-              position: 'bottom',
-              text: '客户添加成功！',
-              time: '3000'
-            })
-          }
-        })
+        if (!this.$refs.name.valid || !this.$refs.phone.valid || !this.$refs.carNo.valid || !this.$refs.vin.valid || !this.$refs.engine.valid || !this.$refs.regist.valid || !this.$refs.expire.valid) {
+          this.$vux.toast.show({
+            type: 'text',
+            width: '15em',
+            position: 'bottom',
+            text: '请完整填写以上信息！',
+            time: '3000'
+          })
+        } else {
+          this.form.customer.areaId = this.areaId
+          this.form.customer = JSON.stringify(this.form.customer)
+          // console.log(this.form.customer)
+          this.$http({
+            method: 'jsonp',
+            url: 'http://liuwbox.com/zzbao/app/customer/submit.htm',
+            jsonp: 'callback',
+            params: this.form,
+            jsonpCallback: 'json'
+          })
+          .then(res => {
+            console.log(res)
+            if (res.body.status) {
+              this.$vux.toast.show({
+                type: 'text',
+                width: '15em',
+                position: 'bottom',
+                text: '客户添加成功！',
+                time: '3000'
+              })
+            }
+          })
+        }
       }
     }
   }

@@ -64,7 +64,7 @@
           </li>
         </ul>
         <group>
-          <x-button type="warn" @click.native="tips = false" :show-loading="loading">确定</x-button>
+          <x-button type="warn" @click.native="handleJump('/exchange')" :show-loading="loading">确定</x-button>
         </group>
       </div>
     </x-dialog>
@@ -120,6 +120,10 @@
       this.goods = JSON.parse(this.$localStorage.get('goods'))
     },
     methods: {
+      handleJump (url) {
+        this.tips = false
+        this.$router.push(url)
+      },
       handleOrder () {
         if (this.$localStorage.get('logined') === 'false') {
           this.$vux.toast.show({
@@ -150,6 +154,7 @@
           }
         })
         .then(res => {
+          console.log(res)
           this.loading = false
           if (res.body.status) {
             this.tips = true

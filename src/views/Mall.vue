@@ -75,7 +75,6 @@
     created () {
       this.getProduct(this)
       if (this.$localStorage.get('logined') === 'true') {
-        this.score = JSON.parse(this.$localStorage.get('userInfo')).userBalance
         this.userId = JSON.parse(this.$localStorage.get('userInfo')).userId
       }
     },

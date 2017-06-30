@@ -131,6 +131,14 @@
               text: '用户资料修改成功！',
               time: '3000'
             })
+          } else {
+            this.$vux.toast.show({
+              type: 'text',
+              width: '15em',
+              position: 'bottom',
+              text: '系统错误，请稍后重试！',
+              time: '3000'
+            })
           }
         })
       },

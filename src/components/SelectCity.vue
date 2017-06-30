@@ -2,7 +2,7 @@
   <div>
     <group gutter="0">
       <cell :title="title" is-link @click.native="handleOpen" class="address">
-        <p><span v-if="!selected">{{value}}</span><span v-if="selected">{{selected}}</span></p>
+        <p><span v-if="!selected">{{value}}<span v-if="!value">请选择</span></span><span v-if="selected">{{selected}}</span></p>
       </cell>
     </group>
     <div v-transfer-dom>
